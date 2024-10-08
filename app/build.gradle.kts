@@ -33,6 +33,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+
+    }
 }
 
 dependencies {
@@ -40,7 +45,25 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("com.github.ibrahimsn98:SmoothBottomBar:1.7.9")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.11.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
+    implementation ("androidx.fragment:fragment-ktx:1.8.4")
+    implementation ("com.google.android.material:material:1.12.0")
+
+
+
+
+
+
 }
