@@ -1,0 +1,25 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background của ProgressBar -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="8dp" /> <!-- Bo tròn góc -->
+            <solid android:color="#D3D3D3" /> <!-- Màu nền của ProgressBar -->
+        </shape>
+    </item>
+
+    <!-- Phần đầu tiên của thanh tiến trình -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <corners android:radius="8dp" />
+                <gradient
+                    android:startColor="#FF5722"
+                    android:centerColor="#FFC107"
+                    android:endColor="#4CAF50"
+                    android:angle="0"/>
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

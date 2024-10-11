@@ -40,6 +40,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+        settingUpListener()
     }
 
 
@@ -79,4 +80,15 @@ class HomeFragment : Fragment() {
         viewModel.fetchAllProject()
     }
 
+
+    fun settingUpListener() {
+//        binding.refreshLayout.setOnRefreshListener {
+//            if (!binding.refreshLayout.canChildScrollUp()) {
+//                // Đã cuộn lên trên cùng, bắt đầu làm mới
+//                binding.refreshLayout.isRefreshing = true
+//                viewModel.fetchAllProject()
+//                binding.refreshLayout.isRefreshing = false
+//            }
+//        }
+    }
 }

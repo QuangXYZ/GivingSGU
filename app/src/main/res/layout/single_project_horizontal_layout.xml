@@ -257,19 +257,19 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/donateAmount" />
 
-                <com.google.android.material.progressindicator.LinearProgressIndicator
+                <ProgressBar
                     android:id="@+id/linearProgressIndicator"
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:indeterminate="false"
+                    android:layout_height="8dp"
                     android:max="100"
+                    android:layout_marginTop="4dp"
+                    style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+
                     android:progress="50"
-                    app:indicatorColor="@color/orange"
+                    android:progressDrawable="@drawable/multi_color_progress"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5"
-                    app:trackColor="#9F9F9F"
-                    app:trackThickness="4dp" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="match_parent"
