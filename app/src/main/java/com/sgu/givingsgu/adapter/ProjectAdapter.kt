@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.sgu.givingsgu.activity.ProjectDetailActivity
 import com.sgu.givingsgu.databinding.SingleProjectLayoutBinding
 import com.sgu.givingsgu.model.Project
 import java.time.LocalDate
@@ -38,9 +39,9 @@ class ProjectAdapter(val projects: MutableList<Project>) : RecyclerView.Adapter<
         holder.binding.projectTime.text = formatTimeDifference(projects[position].startDate!!).toString()
 
         holder.itemView.setOnClickListener {
-//            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
-//            intent.putExtra("object", products[position])
-//            holder.itemView.context.startActivity(intent)
+            val intent = Intent(holder.itemView.context, ProjectDetailActivity::class.java)
+//            intent.putExtra("object", projects[position])
+            holder.itemView.context.startActivity(intent)
         }
     }
 
