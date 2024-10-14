@@ -18,6 +18,9 @@
             android:name=".activity.AdminMainActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.DonationActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ProjectDetailActivity"
             android:exported="false" />
         <activity
