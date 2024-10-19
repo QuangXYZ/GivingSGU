@@ -40,9 +40,10 @@ class ProjectAdapter(val projects: MutableList<Project>) : RecyclerView.Adapter<
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, ProjectDetailActivity::class.java)
-//            intent.putExtra("object", projects[position])
+            intent.putExtra("project", projects[position])
             holder.itemView.context.startActivity(intent)
         }
+
     }
 
 
