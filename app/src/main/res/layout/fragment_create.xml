@@ -1,15 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".activity.Fragment.CreateFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <!-- EditText nhập tên dự án -->
+        <EditText
+            android:id="@+id/project_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên dự án"
+            android:inputType="text" />
+
+        <!-- EditText nhập mô tả dự án -->
+        <EditText
+            android:id="@+id/project_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mô tả dự án"
+            android:inputType="textMultiLine" />
+
+        <!-- Chọn ngày bắt đầu với icon Calendar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/project_start_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:hint="Ngày bắt đầu"
+                android:inputType="date" />
+
+            <ImageView
+                android:id="@+id/start_date_picker"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/calendar" />
+        </LinearLayout>
+
+        <!-- Chọn ngày kết thúc với icon Calendar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/project_end_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:hint="Ngày kết thúc"
+                android:inputType="date" />
+
+            <ImageView
+                android:id="@+id/end_date_picker"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/calendar" />
+        </LinearLayout>
+
+        <!-- EditText nhập số tiền mục tiêu -->
+        <EditText
+            android:id="@+id/project_target_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số tiền mục tiêu"
+            android:inputType="numberDecimal" />
+
+        <!-- Spinner chọn trạng thái -->
+        <Spinner
+            android:id="@+id/project_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/status_options" />
+
+        <ImageButton
+            android:id="@+id/add_image_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/image" />
+        <!-- Nút thêm ảnh và RecyclerView hiển thị ảnh đã chọn -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/images_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="horizontal"/>
+        </LinearLayout>
+
+        <!-- Nút submit -->
+        <Button
+            android:id="@+id/submit_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tạo dự án" />
+    </LinearLayout>
+
+
+</LinearLayout>
