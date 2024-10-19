@@ -1,14 +1,26 @@
 package com.sgu.givingsgu.activity
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.quang.lilyshop.activity.BaseActivity
+import com.sgu.givingsgu.adapter.CommentAdapter
+import com.sgu.givingsgu.adapter.ProjectAdapter
 import com.sgu.givingsgu.databinding.ActivityProjectDetailBinding
+import com.sgu.givingsgu.model.Project
+import com.sgu.givingsgu.viewmodel.ProjectDetailViewModel
 
 
 class ProjectDetailActivity : BaseActivity() {
     private lateinit var binding: ActivityProjectDetailBinding
+    private lateinit var commentAdapter: CommentAdapter
+    private lateinit var project : Project
+    private lateinit var viewModel: ProjectDetailViewModel
+
     var isExpanded: Boolean = false
 
 
@@ -23,6 +35,17 @@ class ProjectDetailActivity : BaseActivity() {
 
 
     fun init() {
+        viewModel = ProjectDetailViewModel()
+        // get bundle
+        project = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("project", Project::class.java)!!
+        } else {
+            intent.getParcelableExtra("project")!!
+        }
+
+        initComment()
+
+
         val fullText =
             "[CHIẾN DỊCH XÂY NHÀ VỆ SINH TẠI MÈO VẠC - HÀ GIANG] 🌟\n\n❤️ Chỉ với 10,000 VNĐ, bạn có thể góp phần mang đến một cuộc sống tốt đẹp hơn cho các em học sinh vùng cao Mèo Vạc - Hà Giang. Quỹ Thiện Nguyện Sinh Viên kêu gọi sự đóng góp của các bạn để xây dựng nhà vệ sinh số 10 và số 11, giúp cải thiện điều kiện sinh hoạt và học tập của các em nhỏ nơi đây.\n\nTại sao lại cần xây nhà vệ sinh? Ở những vùng cao như xã Sùng Trà điều kiện sinh hoạt rất khó khăn, đặc biệt là việc thiếu thốn các nhà vệ sinh đạt chuẩn. Điều này không chỉ ảnh hưởng đến sức khỏe mà còn làm giảm chất lượng học tập của các em. Với mục tiêu mang lại một môi trường sống và học tập an toàn hơn, Quỹ Thiện Nguyện Sinh Viên hy vọng bạn sẽ cùng chung tay xây dựng hai nhà vệ sinh mới cho các em.\n\n💚 Quyền lợi khi tham gia quyên góp: Khi đóng góp, bạn sẽ nhận được giấy chứng nhận từ Quỹ Thiện Nguyện Sinh Viên. Đây cũng là cơ hội để bạn vừa giúp đỡ cộng đồng, vừa tích lũy thêm điểm số cho quá trình rèn luyện của mình.\n\n🧡 Quỹ Thiện Nguyện Sinh Viên tin rằng sự chung tay của mỗi người sẽ mang lại những thay đổi tích cực cho cuộc sống của các em nhỏ vùng cao. Hãy biến 10,000 VNĐ của bạn thành niềm hy vọng cho các em nhỏ Mèo Vạc!\n\n---------------------------------------------\n\n📜 Mọi thắc mắc xin vui lòng liên hệ:\n🎉Fanpage: Quỹ Thiện Nguyện Sinh Viên\n📞 SĐT: 0369.559.342 (Mai Nhung)\n📧Email: thiennguynsinhvien@gmail.com\n---------------------------------------------\n\nQUỸ THIỆN NGUYỆN SINH VIÊN\nĐỂ YÊU THƯƠNG KHÔNG CHỈ LÀ LỜI NÓI!"
         binding.description.setText(fullText)
@@ -54,5 +77,21 @@ class ProjectDetailActivity : BaseActivity() {
                 isExpanded = !isExpanded
             }
         })
+        binding.donateBtn.setOnClickListener {
+            val intent = Intent(this, DonationActivity::class.java)
+            intent.putExtra("project", project)
+            startActivity(intent)
+        }
+    }
+
+    private fun initComment() {
+        viewModel.comment.observe(this, Observer {
+            commentAdapter = CommentAdapter(it.toMutableList())
+            binding.commentRecyclerView.adapter = commentAdapter
+            binding.commentRecyclerView.isNestedScrollingEnabled = true
+            binding.commentRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH)
+            binding.commentRecyclerView.layoutManager = LinearLayoutManager(this)
+        })
+        project?.projectId?.let { viewModel.fetchAllComment(it) }
     }
 }
