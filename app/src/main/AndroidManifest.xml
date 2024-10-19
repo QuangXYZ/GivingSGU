@@ -26,6 +26,9 @@
         <activity
             android:name=".activity.AdminMainActivity"
             android:exported="false" />
+      <activity
+            android:name=".activity.LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.DonationActivity"
             android:exported="false" />
