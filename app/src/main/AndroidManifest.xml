@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <application
         android:allowBackup="true"
@@ -15,10 +21,13 @@
         android:theme="@style/Theme.GivingSGU"
         tools:targetApi="31">
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".adapter.ImageMainActivity"
             android:exported="false" />
         <activity
             android:name=".activity.AdminMainActivity"
+            android:exported="false" />
+      <activity
+            android:name=".activity.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".activity.DonationActivity"
