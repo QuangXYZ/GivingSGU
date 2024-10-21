@@ -19,7 +19,7 @@ class SplashScreenActivity : BaseActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, AdminMainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }, 2000)
     }
