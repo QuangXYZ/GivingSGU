@@ -84,14 +84,14 @@ class CreateFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         // Xử lý chọn ngày bắt đầu
-        binding.startDatePicker.setOnClickListener {
+        binding.projectStartDate.setOnClickListener {
             showDatePicker { date ->
                 binding.projectStartDate.setText(date)
             }
         }
 
         // Xử lý chọn ngày kết thúc
-        binding.endDatePicker.setOnClickListener {
+        binding.projectEndDate.setOnClickListener {
             showDatePicker { date ->
                 binding.projectEndDate.setText(date)
             }
@@ -110,8 +110,10 @@ class CreateFragment : Fragment() {
 
         // Xử lý khi submit dự án
         binding.submitButton.setOnClickListener {
-            val project = createProjectFromInputs()
-            viewModel.uploadImagesAndCreateProject(imageUris, project)
+            if (validateFields()) {
+                val project = createProjectFromInputs()
+                viewModel.uploadImagesAndCreateProject(imageUris, project)
+            }
         }
 
         // Lắng nghe kết quả từ ViewModel
@@ -152,7 +154,7 @@ class CreateFragment : Fragment() {
             targetAmount = binding.projectTargetAmount.text.toString().toDouble(),
             currentAmount = 0.0,
             numberDonors = 0,
-            status = binding.projectStatus.selectedItem.toString(),
+            status = "Đang diễn ra",
             managedBy = 4L  // Giả sử ID người quản lý là 123, có thể lấy từ `SharedPreferences`
         )
     }
@@ -204,5 +206,46 @@ class CreateFragment : Fragment() {
             }
         }
     }
+
+    private fun validateFields(): Boolean {
+        val name = binding.projectName.text.toString().trim()
+        val description = binding.projectDescription.text.toString().trim()
+        val startDate = binding.projectStartDate.text.toString().trim()
+        val endDate = binding.projectEndDate.text.toString().trim()
+        val targetAmount = binding.projectTargetAmount.text.toString().trim()
+
+        if (name.isEmpty()) {
+            Toast.makeText(context, "Tên dự án không được để trống", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (description.isEmpty()) {
+            Toast.makeText(context, "Mô tả dự án không được để trống", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (startDate.isEmpty()) {
+            Toast.makeText(context, "Ngày bắt đầu không được để trống", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (endDate.isEmpty()) {
+            Toast.makeText(context, "Ngày kết thúc không được để trống", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (targetAmount.isEmpty()) {
+            Toast.makeText(context, "Số tiền mục tiêu không được để trống", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (imageUris.isEmpty()) {
+            Toast.makeText(context, "Bạn phải chọn ít nhất một ảnh", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
+    }
+
 
 }
