@@ -1,0 +1,16 @@
+<!-- res/drawable/vnd_text.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
+            <size android:width="50dp" android:height="20dp"/>
+        </shape>
+    </item>
+    <item>
+        <text
+            android:text="VND"
+            android:textSize="20dp"
+            android:textColor="#000000"
+            android:gravity="center"/>
+    </item>
+</layer-list>
