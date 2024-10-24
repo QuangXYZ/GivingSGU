@@ -40,8 +40,8 @@ class AdminMainActivity : AppCompatActivity() {
             add(binding.adminContentFrame.id, adminHomeFragment, "AdminHomeFragment").show(
                 adminHomeFragment
             )
-            add(binding.adminContentFrame.id, createFragment, "CreateFragment").show(createFragment)
-            add(binding.adminContentFrame.id, adminProfileFragment, "AdminProfileFragment").show(
+            add(binding.adminContentFrame.id, createFragment, "CreateFragment").hide(createFragment)
+            add(binding.adminContentFrame.id, adminProfileFragment, "AdminProfileFragment").hide(
                 adminProfileFragment
             )
         }.commit()
@@ -59,7 +59,7 @@ class AdminMainActivity : AppCompatActivity() {
                 }
 
                 1 -> {
-                    switchFragment(createFragment, curPos, 0)
+                    switchFragment(createFragment, curPos, 1)
                     curPos = 1
                 }
 
