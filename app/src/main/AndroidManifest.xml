@@ -19,13 +19,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GivingSGU"
+        tools:replace="theme"
+
+
         tools:targetApi="31">
+
+        <activity-->
+           android:name=".adapter.ImageMainActivity"
+          android:exported="false" />
+
         <activity
             android:name=".activity.RegistrationActivity"
             android:exported="false" />
-<!--        <activity-->
-<!--&lt;!&ndash;            android:name=".adapter.ImageMainActivity"&ndash;&gt;-->
-<!--            android:exported="false" />-->
+
         <activity
             android:name=".activity.AdminMainActivity"
             android:exported="false" />

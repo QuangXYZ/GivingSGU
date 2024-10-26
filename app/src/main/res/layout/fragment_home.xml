@@ -7,81 +7,79 @@
     android:background="@color/white"
     tools:context=".activity.Fragment.HomeFragment">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+
+        <!-- Toolbar (Top App Bar) -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+            android:background="@color/white"
+            android:elevation="4dp"
+            android:title="My App"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
+            app:subtitleTextColor="@color/text_color">
 
-            <!-- Toolbar (Top App Bar) -->
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:elevation="4dp"
-                android:title="My App"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-                app:subtitleTextColor="@color/text_color">
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="32dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="12dp">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginEnd="12dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:text="Welcome back"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp" />
 
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Welcome back"
-                            android:textColor="@color/text_color"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Nguyen Thanh Quang"
-                            android:textColor="@color/orange"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="right"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:padding="10dp"
-                            android:src="@drawable/bell" />
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nguyen Thanh Quang"
+                        android:textColor="@color/orange"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
-            </androidx.appcompat.widget.Toolbar>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-        </com.google.android.material.appbar.AppBarLayout>
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:padding="10dp"
+                        android:src="@drawable/bell" />
 
+                </LinearLayout>
 
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 
 
@@ -96,9 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="60dp"
-
                 android:orientation="vertical">
-
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -142,12 +138,10 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp">
-
 
                     <ProgressBar
                         android:id="@+id/projectHighLightProgressBar"
@@ -164,7 +158,6 @@
                         android:id="@+id/projectHighLightRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:paddingEnd="12dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -176,14 +169,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp">
 
-
                     <ProgressBar
                         android:id="@+id/projectProgressBar"
                         style="?android:attr/progressBarStyle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="100dp"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -193,7 +184,6 @@
                         android:id="@+id/projectRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
