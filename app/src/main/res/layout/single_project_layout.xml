@@ -96,6 +96,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
             <ImageView
+                android:id="@+id/projectImg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"

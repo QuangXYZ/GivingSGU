@@ -304,7 +304,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 app:cardBackgroundColor="@color/white"
-                app:strokeColor="@color/lightGrey"
+                app:strokeColor="@color/orange"
                 app:strokeWidth="1dp"
                 app:cardCornerRadius="8dp">
                 <LinearLayout
@@ -333,7 +333,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/momoPayment"
+                android:id="@+id/zaloPayment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"

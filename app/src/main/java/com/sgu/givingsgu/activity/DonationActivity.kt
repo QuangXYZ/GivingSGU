@@ -19,6 +19,8 @@ import com.quang.lilyshop.activity.BaseActivity
 import com.sgu.givingsgu.R
 import com.sgu.givingsgu.databinding.ActivityDonationBinding
 import com.sgu.givingsgu.databinding.ActivityMainBinding
+import com.sgu.givingsgu.network.request.TransactionRequest
+import com.sgu.givingsgu.viewmodel.DonationViewModel
 import vn.momo.momo_partner.AppMoMoLib
 import vn.momo.momo_partner.MoMoParameterNamePayment
 import vn.momo.momo_partner.utils.MoMoConfig
@@ -30,7 +32,7 @@ class DonationActivity : BaseActivity() {
     private var lastClickedCard: MaterialCardView? = null
     private var lastClickedTextView: TextView? = null
     private var current = ""
-
+    private lateinit var viewModel : DonationViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +45,7 @@ class DonationActivity : BaseActivity() {
 
 
     private fun init() {
+        viewModel = DonationViewModel()
         AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.PRODUCTION) // Hoặc AppMoMoLib.ENVIRONMENT.PRODUCTION
 
 
@@ -112,7 +115,17 @@ class DonationActivity : BaseActivity() {
         binding.previous.setOnClickListener {
             finish()
         }
+        binding.momoPayment.setOnClickListener{
+            binding.momoPayment.strokeColor = ContextCompat.getColor(this, R.color.orange)
+            binding.zaloPayment.strokeColor = ContextCompat.getColor(this, R.color.lightGrey)
 
+        }
+
+        binding.zaloPayment.setOnClickListener{
+            binding.zaloPayment.strokeColor = ContextCompat.getColor(this, R.color.orange)
+            binding.momoPayment.strokeColor = ContextCompat.getColor(this, R.color.lightGrey)
+
+        }
 
     }
 
@@ -123,15 +136,15 @@ class DonationActivity : BaseActivity() {
         // Prepare data for payment request
         val requestData = HashMap<String, Any?>()
 
-        requestData[MoMoParameterNamePayment.MERCHANT_NAME] = "Tên doanh nghiệp SDK4ME"
-        requestData[MoMoParameterNamePayment.MERCHANT_CODE] = "MOMONPMB20210629"
+        requestData[MoMoParameterNamePayment.MERCHANT_NAME] = "MOMO_DEMO"
+        requestData[MoMoParameterNamePayment.MERCHANT_CODE] = "MOMOT5BZ20231213_TEST"
         requestData[MoMoParameterNamePayment.MERCHANT_NAME_LABEL] = "Merchant Name Label"
-        requestData[MoMoParameterNamePayment.AMOUNT] = 10000 // Số tiền
+        requestData[MoMoParameterNamePayment.AMOUNT] = binding.amount.text.toString().replace(",", "")
         requestData[MoMoParameterNamePayment.DESCRIPTION] = "Payment for X"
 
         // Payment code (unique for each transaction)
         requestData[MoMoParameterNamePayment.REQUEST_ID] = System.currentTimeMillis().toString()
-        requestData[MoMoParameterNamePayment.PARTNER_CODE] = "MOMONPMB20210629"
+        requestData[MoMoParameterNamePayment.PARTNER_CODE] = "MOMOT5BZ20231213_TEST"
         requestData[MoMoParameterNamePayment.LANGUAGE] = "vi" // or "en"
         requestData[MoMoParameterNamePayment.REQUEST_TYPE] = "payment"
 
@@ -151,8 +164,12 @@ class DonationActivity : BaseActivity() {
 
                 if (status == 0) { // Thành công
                     val message = data.getStringExtra("message")
-                    val token = data.getStringExtra("data") // Dữ liệu token trả về từ MoMo
-                    // Xử lý khi thanh toán thành công
+                    val token = data.getStringExtra("data").toString() // Dữ liệu token trả về từ MoMo
+                    val amount = data.getStringExtra("amount").toString()
+
+//                    val transactionRequest = TransactionRequest(userId, , amount.toDouble(), "MoMo", token)
+
+                    viewModel.saveTransaction(1, 1, amount.toDouble(), "MoMo")
                     Toast.makeText(this, "Payment success! Token: $token", Toast.LENGTH_LONG).show()
                 } else {
                     // Thất bại

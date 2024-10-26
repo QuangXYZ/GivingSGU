@@ -35,6 +35,13 @@ class ProjectHighLightAdapter(val projects: MutableList<Project>) : RecyclerView
             ?.toInt()
         holder.binding.donatePercent.text = percent.toString()+"%"
         holder.binding.linearProgressIndicator.progress = percent!!
+        if (projects[position].imageUrls != null) {
+            if (projects[position].imageUrls?.split(",")?.toTypedArray()?.get(0) != null) {
+                val img = projects[position].imageUrls?.split(",")?.toTypedArray()
+                Glide.with(context).load(img?.get(0)).into(holder.binding.imageView2)
+            }
+
+        }
 
         holder.binding.donateNumber.text = projects[position].numberDonors.toString()+" người đã ủng hộ"
         holder.binding.projectTime.text = formatTimeDifference(projects[position].startDate!!).toString()

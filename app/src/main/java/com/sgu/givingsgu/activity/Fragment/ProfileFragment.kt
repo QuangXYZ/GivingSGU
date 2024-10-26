@@ -35,10 +35,10 @@ class ProfileFragment : Fragment() {
 
     fun init() {
         // init
-        binding.loginButton.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            // Bắt đầu Activity mới
-            startActivity(intent)
-        })
+//        binding.loginButton.setOnClickListener(View.OnClickListener {
+//            val intent = Intent(requireContext(), LoginActivity::class.java)
+//            // Bắt đầu Activity mới
+//            startActivity(intent)
+//        })
     }
 }

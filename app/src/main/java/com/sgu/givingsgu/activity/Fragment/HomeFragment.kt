@@ -62,7 +62,6 @@ class HomeFragment : Fragment() {
             projectAdapter = ProjectAdapter(it.toMutableList())
             binding.projectRecyclerView.adapter = projectAdapter
             binding.projectRecyclerView.isNestedScrollingEnabled = true
-            binding.projectRecyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH)
             binding.projectRecyclerView.layoutManager = LinearLayoutManager(context)
             binding.projectProgressBar.visibility = View.GONE
         })
@@ -82,12 +81,12 @@ class HomeFragment : Fragment() {
 
 
     fun settingUpListener() {
-//        binding.refreshLayout.setOnRefreshListener {
-//            if (!binding.refreshLayout.canChildScrollUp()) {
+//        binding.swipeRefreshLayout.setOnRefreshListener {
+//            if (!binding.swipeRefreshLayout.canChildScrollUp()) {
 //                // Đã cuộn lên trên cùng, bắt đầu làm mới
-//                binding.refreshLayout.isRefreshing = true
+//                binding.swipeRefreshLayout.isRefreshing = true
 //                viewModel.fetchAllProject()
-//                binding.refreshLayout.isRefreshing = false
+//                binding.swipeRefreshLayout.isRefreshing = false
 //            }
 //        }
     }
