@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundlogin"
+    tools:context=".activity.RegistrationActivity">
+
+
+    <!-- Trường nhập tên người dùng -->
+    <EditText
+        android:id="@+id/usernameEditText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:hint="Username"
+        android:background="@drawable/rounded_edittext"
+        android:padding="15dp"
+        android:textColor="#000000"
+        android:textColorHint="#BDBDBD"
+        android:inputType="text"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="250dp" />
+
+    <!-- Trường nhập mật khẩu -->
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:hint="Password"
+        android:background="@drawable/rounded_edittext"
+        android:padding="15dp"
+        android:textColor="#000000"
+        android:textColorHint="#BDBDBD"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@id/usernameEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp" />
+
+    <!-- Trường nhập email -->
+    <EditText
+        android:id="@+id/emailEditText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:hint="Email"
+        android:background="@drawable/rounded_edittext"
+        android:padding="15dp"
+        android:textColor="#000000"
+        android:textColorHint="#BDBDBD"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@id/passwordEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp" />
+
+    <!-- Trường nhập số điện thoại -->
+    <EditText
+        android:id="@+id/phoneEditText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:hint="Phone Number"
+        android:background="@drawable/rounded_edittext"
+        android:padding="15dp"
+        android:textColor="#000000"
+        android:textColorHint="#BDBDBD"
+        android:inputType="phone"
+        app:layout_constraintTop_toBottomOf="@id/emailEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp" />
+
+    <!-- Nút đăng ký -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/registerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:background="@drawable/background_button"
+        android:backgroundTint="#EB7279"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/phoneEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

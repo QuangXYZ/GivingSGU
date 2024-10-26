@@ -79,31 +79,36 @@
     <!-- Liên kết Quên mật khẩu -->
 
     <!-- Đăng ký tài khoản mới -->
-    <TextView
-        android:id="@+id/forgotPasswordTextView"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/registerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Forgot Password?"
         android:textColor="#000000"
         android:textStyle="italic"
+        android:textSize="15dp"
+        android:textAllCaps="false"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/loginButton" />
 
-    <TextView
-        android:id="@+id/registerTextView"
+    <androidx.appcompat.widget.AppCompatButton
+
+        android:id="@+id/forgotPasswordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:background="@android:color/transparent"
         android:text="Don't have an account? Sign up"
+        android:textAllCaps="false"
         android:textColor="#000000"
+        android:textSize="15dp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgotPasswordTextView"
-        app:layout_constraintVertical_bias="0.079" />
+        app:layout_constraintTop_toBottomOf="@+id/registerTextView"
+        android:layout_marginBottom="30dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
