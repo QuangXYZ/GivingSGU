@@ -8,6 +8,7 @@ import com.sgu.givingsgu.model.User
 import com.sgu.givingsgu.network.request.TransactionRequest
 import com.sgu.givingsgu.network.response.ResponseWrapper
 import com.sgu.givingsgu.repository.AuthRepository
+import com.sgu.givingsgu.utils.DataLocalManager
 import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -55,7 +56,9 @@ class LoginViewModel :ViewModel() {
             authRepository.loginUser(email, password).enqueue(object : Callback<ResponseWrapper<String>> {
                 override fun onResponse(call: Call<ResponseWrapper<String>>, response: Response<ResponseWrapper<String>>) {
                     if (response.isSuccessful) {
-
+                        //luu lai token
+                        DataLocalManager.saveToken(response.body()?.data!!)
+                        DataLocalManager.setLoggedIn(true)
                         callback.onSuccess()
                         // Xử lý thành công
                     } else {
