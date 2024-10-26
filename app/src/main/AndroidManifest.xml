@@ -21,8 +21,11 @@
         android:theme="@style/Theme.GivingSGU"
         tools:targetApi="31">
         <activity
-            android:name=".adapter.ImageMainActivity"
+            android:name=".activity.RegistrationActivity"
             android:exported="false" />
+<!--        <activity-->
+<!--&lt;!&ndash;            android:name=".adapter.ImageMainActivity"&ndash;&gt;-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".activity.AdminMainActivity"
             android:exported="false" />
