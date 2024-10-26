@@ -29,8 +29,7 @@ class ProfileFragment : Fragment() {
         settingUpListener()
     }
 
-    private fun settingUpListener() {
-    }
+
 
 
     fun init() {
@@ -40,5 +39,13 @@ class ProfileFragment : Fragment() {
 //            // Bắt đầu Activity mới
 //            startActivity(intent)
 //        })
+
+    }
+    fun settingUpListener() {
+        binding.logout.setOnClickListener(View.OnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            // Bắt đầu Activity mới
+            startActivity(intent)
+        })
     }
 }

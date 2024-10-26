@@ -1,16 +1,19 @@
 package com.sgu.givingsgu.network.apiService
-
-import com.sgu.givingsgu.model.AuthRequest
-import com.sgu.givingsgu.model.AuthResponse
+import com.sgu.givingsgu.model.User
+import com.sgu.givingsgu.network.response.ResponseWrapper
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AuthService {
 
     @POST("/api/auth/login")
-    fun login(@Body authRequest: AuthRequest): Call<AuthResponse>
+    fun loginUser(
+        @Query("username") username: String,
+        @Query("password") password: String
+    ): Call<ResponseWrapper<String>>
 
     @POST("/api/auth/register")
-    fun register(@Body authRequest: AuthRequest): Call<Void>
+    fun registerUser(@Body user: User): Call<ResponseWrapper<User>>
 }
