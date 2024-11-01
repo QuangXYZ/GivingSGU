@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sgu.givingsgu.databinding.AdminSingleProjectLayoutBinding
 import com.sgu.givingsgu.model.Project
+import com.sgu.givingsgu.network.response.ProjectResponse
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.Date
 
-class AdminProjectAdapter(val projects: MutableList<Project>) :
+class AdminProjectAdapter(val projects: MutableList<ProjectResponse>) :
     RecyclerView.Adapter<AdminProjectAdapter.ViewHolder>() {
 
     private lateinit var context: Context
@@ -27,18 +28,18 @@ class AdminProjectAdapter(val projects: MutableList<Project>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.adminTitle.text = projects[position].name
-        holder.binding.adminDonateAmount.text = projects[position].currentAmount.toString() + " VND"
-        val percent = (projects[position].currentAmount?.div(projects[position].targetAmount)
+        holder.binding.adminTitle.text = projects[position].project.name
+        holder.binding.adminDonateAmount.text = projects[position].project.currentAmount.toString() + " VND"
+        val percent = (projects[position].project.currentAmount?.div(projects[position].project.targetAmount)
             ?.times(100))
             ?.toInt()
         holder.binding.adminDonatePercent.text = percent.toString() + "%"
         holder.binding.adminLinearProgressIndicator.progress = percent!!
 
         holder.binding.adminDonateNumber.text =
-            projects[position].numberDonors.toString() + " người đã ủng hộ"
+            projects[position].project.numberDonors.toString() + " người đã ủng hộ"
         holder.binding.projectTime.text =
-            formatTimeDifference(projects[position].startDate!!).toString()
+            formatTimeDifference(projects[position].project.startDate!!).toString()
 
 //        holder.itemView.setOnClickListener {
 //            val intent = Intent(holder.itemView.context, ProjectDetailActivity::class.java)

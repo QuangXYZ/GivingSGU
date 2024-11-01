@@ -15,6 +15,7 @@ import com.sgu.givingsgu.adapter.AdminProjectHighLightAdapter
 import com.sgu.givingsgu.adapter.ProjectAdapter
 import com.sgu.givingsgu.adapter.ProjectHighLightAdapter
 import com.sgu.givingsgu.databinding.FragmentAdminHomeBinding
+import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.viewmodel.HomeViewModel
 
 class AdminHomeFragment : Fragment() {
@@ -63,7 +64,10 @@ class AdminHomeFragment : Fragment() {
     private fun initProjectHighLight() {
         binding.projectHighLightProgressBar.visibility = View.VISIBLE
         viewModel.project.observe(viewLifecycleOwner, Observer {
-            adminProjectHighLightAdapter = AdminProjectHighLightAdapter(it.toMutableList())
+            val projectList = it.map { projectResponse -> projectResponse.project }
+
+            adminProjectHighLightAdapter = AdminProjectHighLightAdapter(projectList as MutableList<Project>)
+            binding.adminProjectHighLightRecyclerView.adapter = adminProjectHighLightAdapter
             binding.adminProjectHighLightRecyclerView.adapter = adminProjectHighLightAdapter
             binding.adminProjectHighLightRecyclerView.isNestedScrollingEnabled = true
             binding.adminProjectHighLightRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

@@ -18,7 +18,7 @@
         android:layout_marginBottom="30dp"
         android:contentDescription="App Logo"
         android:scaleType="centerInside"
-        android:src="@drawable/portfolio"
+        android:src="@drawable/give_love"
         app:layout_constraintBottom_toTopOf="@id/usernameEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
