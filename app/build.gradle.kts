@@ -70,8 +70,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage-ktx:21.0.1")
     implementation("io.github.bitvale:switcher:1.1.2")
     implementation("com.github.momo-wallet:mobile-sdk:1.0.7")
-
-
+    implementation("com.auth0:java-jwt:3.18.2")
 
 
 

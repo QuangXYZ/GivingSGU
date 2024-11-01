@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.quang.lilyshop.activity.BaseActivity
+import com.sgu.givingsgu.activity.Fragment.ProfileFragment
 import com.sgu.givingsgu.databinding.ActivityLoginBinding
 
 import com.sgu.givingsgu.viewmodel.LoginViewModel
@@ -40,6 +41,8 @@ class LoginActivity : BaseActivity() {
                 viewModel.loginUser(username, password, object : LoginViewModel.AuthCallback {
                     override fun onSuccess() {
                         Toast.makeText(this@LoginActivity, "Login success", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(intent)
                     }
 
                     override fun onFailure(message: String) {
