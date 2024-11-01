@@ -6,13 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.sgu.givingsgu.activity.LoginActivity
 import com.sgu.givingsgu.databinding.FragmentProfileBinding
-
+import com.sgu.givingsgu.utils.DataLocalManager
+import com.sgu.givingsgu.utils.TokenUtils
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,24 +26,32 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
         settingUpListener()
     }
 
-
-
+    override fun onResume() {
+        super.onResume()
+        init()
+    }
 
     fun init() {
-        // init
-//        binding.loginButton.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(requireContext(), LoginActivity::class.java)
-//            // Bắt đầu Activity mới
-//            startActivity(intent)
-//        })
-
+        // Retrieve user and display data
+        val token = DataLocalManager.getToken()
+        if (token != null) {
+            val sub = TokenUtils.getClaimFromToken(token, "sub")
+            binding.name.text = sub
+            println("User sub: $sub")
+            Toast.makeText(requireContext(), "Welcome back $sub", Toast.LENGTH_SHORT).show()
+            // You can use the user data for further processing here
+        } else {
+            binding.textView26.text = "Log in"
+            println("token is null")
+            Toast.makeText(requireContext(), "Welcome Guess", Toast.LENGTH_SHORT).show()
+        }
     }
     fun settingUpListener() {
         binding.logout.setOnClickListener(View.OnClickListener {
+            DataLocalManager.clearData()
             val intent = Intent(requireContext(), LoginActivity::class.java)
             // Bắt đầu Activity mới
             startActivity(intent)
