@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgu.givingsgu.model.User
 import com.sgu.givingsgu.network.request.TransactionRequest
+import com.sgu.givingsgu.network.response.LoginResponse
 import com.sgu.givingsgu.network.response.ResponseWrapper
 import com.sgu.givingsgu.repository.AuthRepository
 import com.sgu.givingsgu.utils.DataLocalManager
@@ -20,11 +21,15 @@ class LoginViewModel :ViewModel() {
 
     fun loginUser(email: String, password: String, callback: AuthCallback) {
         viewModelScope.launch {
-            authRepository.loginUser(email, password).enqueue(object : Callback<ResponseWrapper<String>> {
-                override fun onResponse(call: Call<ResponseWrapper<String>>, response: Response<ResponseWrapper<String>>) {
+            authRepository.loginUser(email, password).enqueue(object : Callback<ResponseWrapper<LoginResponse>> {
+                override fun onResponse(call: Call<ResponseWrapper<LoginResponse>>, response: Response<ResponseWrapper<LoginResponse>>) {
                     if (response.isSuccessful) {
                         //luu lai token
-                        DataLocalManager.saveToken(response.body()?.data!!)
+                        DataLocalManager.saveToken(response.body()?.data?.token!!)
+
+                        //luu lai user
+                        DataLocalManager.saveUser(response.body()?.data?.user!!)
+
                         DataLocalManager.setLoggedIn(true)
                         callback.onSuccess()
                         // Xử lý thành công
@@ -34,7 +39,7 @@ class LoginViewModel :ViewModel() {
                     }
                 }
 
-                override fun onFailure(call: Call<ResponseWrapper<String>>, t: Throwable) {
+                override fun onFailure(call: Call<ResponseWrapper<LoginResponse>>, t: Throwable) {
                     // Xử lý lỗi
                     callback.onFailure(t.message.toString())
                 }

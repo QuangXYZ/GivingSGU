@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.sgu.givingsgu.activity.ProjectDetailActivity
 import com.sgu.givingsgu.databinding.SingleProjectLayoutBinding
 import com.sgu.givingsgu.model.Project
+import com.sgu.givingsgu.network.response.ProjectResponse
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -16,7 +17,7 @@ import java.time.temporal.ChronoUnit
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
-class ProjectAdapter(val projects: MutableList<Project>) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
+class ProjectAdapter(val projects: MutableList<ProjectResponse>) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
 
     private lateinit var context: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,28 +28,33 @@ class ProjectAdapter(val projects: MutableList<Project>) : RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.title.text = projects[position].name
-        holder.binding.donateAmount.text = projects[position].currentAmount.toString()+ " VND"
-        val percent = (projects[position].currentAmount?.div(projects[position].targetAmount)
+        holder.binding.title.text = projects[position].project.name
+        holder.binding.donateAmount.text = projects[position].project.currentAmount.toString()+ " VND"
+        val percent = (projects[position].project.currentAmount?.div(projects[position].project.targetAmount)
             ?.times(100))
             ?.toInt()
         holder.binding.donatePercent.text = percent.toString()+"%"
         holder.binding.linearProgressIndicator.progress = percent!!
 
-        if (projects[position].imageUrls != null) {
-            if (projects[position].imageUrls?.split(",")?.toTypedArray()?.get(0) != null) {
-                val img = projects[position].imageUrls?.split(",")?.toTypedArray()
+        if (projects[position].project.imageUrls != null) {
+            if (projects[position].project.imageUrls?.split(",")?.toTypedArray()?.get(0) != null) {
+                val img = projects[position].project.imageUrls?.split(",")?.toTypedArray()
                 Glide.with(context).load(img?.get(0)).into(holder.binding.projectImg)
             }
 
         }
 
-        holder.binding.donateNumber.text = projects[position].numberDonors.toString()+" người đã ủng hộ"
-        holder.binding.projectTime.text = formatTimeDifference(projects[position].startDate!!).toString()
+        holder.binding.donateNumber.text = projects[position].project.numberDonors.toString()+" người đã ủng hộ"
+        holder.binding.projectTime.text = formatTimeDifference(projects[position].project.startDate!!)
+        if (projects[position].liked) {
+            holder.binding.homeLikeBtn.isChecked = true
+        }
+
+        holder.binding.likeCount.text = projects[position].likeCount.toString()
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, ProjectDetailActivity::class.java)
-            intent.putExtra("project", projects[position])
+            intent.putExtra("project", projects[position].project)
             holder.itemView.context.startActivity(intent)
         }
 

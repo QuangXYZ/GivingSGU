@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sgu.givingsgu.adapter.ProjectAdapter
 import com.sgu.givingsgu.adapter.ProjectHighLightAdapter
+import com.sgu.givingsgu.model.Project
 
 
 class HomeFragment : Fragment() {
@@ -70,7 +71,10 @@ class HomeFragment : Fragment() {
     private fun initProjectHighLight() {
         binding.projectHighLightProgressBar.visibility = View.VISIBLE
         viewModel.project.observe(viewLifecycleOwner, Observer {
-            projectHighLightAdapter = ProjectHighLightAdapter(it.toMutableList())
+            val projectList = it.map { projectResponse -> projectResponse.project }
+            projectHighLightAdapter = ProjectHighLightAdapter(projectList as MutableList<Project>)
+            binding.projectHighLightRecyclerView.adapter = projectHighLightAdapter
+
             binding.projectHighLightRecyclerView.adapter = projectHighLightAdapter
             binding.projectHighLightRecyclerView.isNestedScrollingEnabled = true
             binding.projectHighLightRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
