@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.sgu.givingsgu.activity.LoginActivity
 import com.sgu.givingsgu.databinding.FragmentProfileBinding
+import com.sgu.givingsgu.utils.DataLocalManager
 
 
 class ProfileFragment : Fragment() {
@@ -43,6 +44,8 @@ class ProfileFragment : Fragment() {
     }
     fun settingUpListener() {
         binding.logout.setOnClickListener(View.OnClickListener {
+            DataLocalManager.setLoggedIn(false)
+            DataLocalManager.clearTokenAndUser()
             val intent = Intent(requireContext(), LoginActivity::class.java)
             // Bắt đầu Activity mới
             startActivity(intent)
