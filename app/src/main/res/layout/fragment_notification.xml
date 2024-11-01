@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.Fragment.NotificationFragment">
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Thông báo"
+            android:textColor="@color/text_color"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hôm nay"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:strokeWidth="0.5dp"
+            app:strokeColor="@color/lightGrey"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    app:civ_border_color="@color/lightGrey"
+                    app:civ_border_width="1dp"
+                    app:civ_circle_background_color="@color/white"
+                    android:src="@drawable/give_love"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bạn đã đóng góp cho dự án"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView7"
+                        app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mô tả dự án"
+                            android:textColor="@color/text_color"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 Giờ trước"
+                        android:textColor="@color/text_color"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                       />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:strokeWidth="0.5dp"
+            app:strokeColor="@color/lightGrey"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    app:civ_border_color="@color/lightGrey"
+                    app:civ_border_width="1dp"
+                    app:civ_circle_background_color="@color/white"
+                    android:src="@drawable/give_love"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bạn đã đóng góp cho dự án"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView20"
+                        app:layout_constraintTop_toBottomOf="@+id/textView20">
+
+                        <TextView
+                            android:id="@+id/textView21"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mô tả dự án"
+                            android:textColor="@color/text_color"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 Giờ trước"
+                        android:textColor="@color/text_color"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 Ngày trước"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:strokeWidth="0.5dp"
+            app:strokeColor="@color/lightGrey"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    app:civ_border_color="@color/lightGrey"
+                    app:civ_border_width="1dp"
+                    app:civ_circle_background_color="@color/white"
+                    android:src="@drawable/give_love"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:id="@+id/textView25"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bạn đã đóng góp cho dự án"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView25"
+                        app:layout_constraintTop_toBottomOf="@+id/textView25">
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mô tả dự án"
+                            android:textColor="@color/text_color"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 Giờ trước"
+                        android:textColor="@color/text_color"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:strokeWidth="0.5dp"
+            app:strokeColor="@color/lightGrey"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    app:civ_border_color="@color/lightGrey"
+                    app:civ_border_width="1dp"
+                    app:civ_circle_background_color="@color/white"
+                    android:src="@drawable/give_love"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+
+                    <TextView
+                        android:id="@+id/textView23"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Bạn đã đóng góp cho dự án"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView23"
+                        app:layout_constraintTop_toBottomOf="@+id/textView23">
+
+                        <TextView
+                            android:id="@+id/textView24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mô tả dự án"
+                            android:textColor="@color/text_color"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 Giờ trước"
+                        android:textColor="@color/text_color"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

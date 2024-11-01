@@ -55,6 +55,11 @@ object DataLocalManager {
         return sharedPreferences?.getBoolean(KEY_IS_LOGGED_IN, false) ?: false
     }
 
+    fun clearTokenAndUser() {
+        sharedPreferences?.edit()?.remove(KEY_TOKEN)?.remove(KEY_USER)?.apply()
+    }
+
+
     // Xóa toàn bộ dữ liệu
     fun clearData() {
         sharedPreferences?.edit()?.clear()?.apply()
