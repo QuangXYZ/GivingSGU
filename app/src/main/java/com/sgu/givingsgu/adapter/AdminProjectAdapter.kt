@@ -1,9 +1,12 @@
 package com.sgu.givingsgu.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sgu.givingsgu.activity.AdminProjectDetailActivity
+import com.sgu.givingsgu.activity.ProjectDetailActivity
 import com.sgu.givingsgu.databinding.AdminSingleProjectLayoutBinding
 import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.network.response.ProjectResponse
@@ -41,11 +44,11 @@ class AdminProjectAdapter(val projects: MutableList<ProjectResponse>) :
         holder.binding.projectTime.text =
             formatTimeDifference(projects[position].project.startDate!!).toString()
 
-//        holder.itemView.setOnClickListener {
-//            val intent = Intent(holder.itemView.context, ProjectDetailActivity::class.java)
-////            intent.putExtra("object", projects[position])
-//            holder.itemView.context.startActivity(intent)
-//        }
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, AdminProjectDetailActivity::class.java)
+            intent.putExtra("project", projects[position].project)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
 
