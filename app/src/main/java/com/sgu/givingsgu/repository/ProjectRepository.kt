@@ -24,4 +24,8 @@ class ProjectRepository {
     suspend fun createProject(project: ProjectDTO): Response<ProjectDTO> {
         return projectApiService.createProject(project)
     }
+
+    suspend fun updateProject(id: Long, project: ProjectDTO): Response<ProjectDTO> {
+        return projectApiService.updateProject(id, project)
+    }
 }

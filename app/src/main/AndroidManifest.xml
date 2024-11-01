@@ -11,8 +11,8 @@
         android:maxSdkVersion="32" />
 
     <application
-        android:allowBackup="true"
         android:name=".utils.MyApp"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -21,22 +21,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GivingSGU"
         tools:replace="theme"
-
-
         tools:targetApi="31">
-
-<!--        <activity-->
-<!--           android:name=".adapter.ImageMainActivity"-->
-<!--          android:exported="false" />-->
-
+        <activity
+            android:name=".activity.UpdateProjectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AdminProjectDetailActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".adapter.ImageMainActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".activity.RegistrationActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.AdminMainActivity"
             android:exported="false" />
-      <activity
+        <activity
             android:name=".activity.LoginActivity"
             android:exported="false" />
         <activity
