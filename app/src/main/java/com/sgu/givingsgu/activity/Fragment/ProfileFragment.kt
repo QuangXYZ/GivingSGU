@@ -51,7 +51,8 @@ class ProfileFragment : Fragment() {
     }
     fun settingUpListener() {
         binding.logout.setOnClickListener(View.OnClickListener {
-            DataLocalManager.clearData()
+            DataLocalManager.setLoggedIn(false)
+            DataLocalManager.clearTokenAndUser()
             val intent = Intent(requireContext(), LoginActivity::class.java)
             // Bắt đầu Activity mới
             startActivity(intent)
