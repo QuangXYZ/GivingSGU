@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.sgu.givingsgu.activity.LoginActivity
+import com.sgu.givingsgu.activity.MainActivity
 import com.sgu.givingsgu.databinding.FragmentProfileBinding
 import com.sgu.givingsgu.utils.DataLocalManager
 import com.sgu.givingsgu.utils.TokenUtils
@@ -44,6 +45,7 @@ class ProfileFragment : Fragment() {
             Toast.makeText(requireContext(), "Welcome back $sub", Toast.LENGTH_SHORT).show()
             // You can use the user data for further processing here
         } else {
+            binding.name.text = "Guest"
             binding.textView26.text = "Log in"
             println("token is null")
             Toast.makeText(requireContext(), "Welcome Guess", Toast.LENGTH_SHORT).show()
@@ -51,11 +53,16 @@ class ProfileFragment : Fragment() {
     }
     fun settingUpListener() {
         binding.logout.setOnClickListener(View.OnClickListener {
-            DataLocalManager.setLoggedIn(false)
-            DataLocalManager.clearTokenAndUser()
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            // Bắt đầu Activity mới
-            startActivity(intent)
+            if(DataLocalManager.getToken() != null) {
+                DataLocalManager.setLoggedIn(false)
+                DataLocalManager.clearTokenAndUser()
+                val intent2 = Intent(requireContext(), MainActivity::class.java)
+                startActivity(intent2)
+            }
+            else {
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                startActivity(intent)
+            }
         })
     }
 }
