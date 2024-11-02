@@ -71,6 +71,8 @@ dependencies {
     implementation("io.github.bitvale:switcher:1.1.2")
     implementation("com.github.momo-wallet:mobile-sdk:1.0.7")
     implementation("com.auth0:java-jwt:3.18.2")
+    implementation("com.github.stfalcon-studio:StfalconImageViewer:v1.0.1")
+
 
 
 

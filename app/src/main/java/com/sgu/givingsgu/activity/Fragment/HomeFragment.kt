@@ -14,6 +14,7 @@ import com.sgu.givingsgu.viewmodel.HomeViewModel
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout
 import com.sgu.givingsgu.adapter.ProjectAdapter
 import com.sgu.givingsgu.adapter.ProjectHighLightAdapter
 import com.sgu.givingsgu.model.Project
@@ -24,9 +25,6 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var projectAdapter: ProjectAdapter
     private lateinit var projectHighLightAdapter: ProjectHighLightAdapter
-
-
-
 
 
     override fun onCreateView(
@@ -68,6 +66,7 @@ class HomeFragment : Fragment() {
         })
         viewModel.fetchAllProject()
     }
+
     private fun initProjectHighLight() {
         binding.projectHighLightProgressBar.visibility = View.VISIBLE
         viewModel.project.observe(viewLifecycleOwner, Observer {
@@ -77,7 +76,8 @@ class HomeFragment : Fragment() {
 
             binding.projectHighLightRecyclerView.adapter = projectHighLightAdapter
             binding.projectHighLightRecyclerView.isNestedScrollingEnabled = true
-            binding.projectHighLightRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.projectHighLightRecyclerView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             binding.projectHighLightProgressBar.visibility = View.GONE
         })
         viewModel.fetchAllProject()
@@ -85,13 +85,32 @@ class HomeFragment : Fragment() {
 
 
     fun settingUpListener() {
-//        binding.swipeRefreshLayout.setOnRefreshListener {
-//            if (!binding.swipeRefreshLayout.canChildScrollUp()) {
-//                // Đã cuộn lên trên cùng, bắt đầu làm mới
-//                binding.swipeRefreshLayout.isRefreshing = true
-//                viewModel.fetchAllProject()
-//                binding.swipeRefreshLayout.isRefreshing = false
-//            }
-//        }
+
+        binding.appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+            // Kiểm tra xem AppBarLayout có đang mở hoàn toàn không
+            binding.swipeRefreshLayout.isEnabled = verticalOffset == 0
+        })
+
+        // Setup swipe to refresh listener
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.projectProgressBar.visibility = View.VISIBLE
+            binding.projectHighLightProgressBar.visibility = View.VISIBLE
+
+            binding.projectRecyclerView.visibility = View.GONE
+            binding.projectHighLightRecyclerView.visibility = View.GONE
+
+            binding.swipeRefreshLayout.isRefreshing = true
+            viewModel.fetchAllProject()
+
+            binding.swipeRefreshLayout.postDelayed({
+                binding.swipeRefreshLayout.isRefreshing = false
+                binding.projectProgressBar.visibility = View.GONE
+                binding.projectHighLightProgressBar.visibility = View.GONE
+                binding.projectRecyclerView.visibility = View.VISIBLE
+                binding.projectHighLightRecyclerView.visibility = View.VISIBLE
+            }, 3000)
+        }
+
+
     }
 }

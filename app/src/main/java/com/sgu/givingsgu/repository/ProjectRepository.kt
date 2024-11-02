@@ -24,4 +24,13 @@ class ProjectRepository {
     suspend fun createProject(project: ProjectDTO): Response<ProjectDTO> {
         return projectApiService.createProject(project)
     }
+
+    fun likeProject(projectId: Long): Call<ResponseWrapper<List<String>>> {
+        return projectApiService.likeProject(projectId, DataLocalManager.getUser()?.userId!!)
+    }
+
+    fun unlikeProject(projectId: Long): Call<ResponseWrapper<List<String>>> {
+        return projectApiService.unlikeProject(projectId, DataLocalManager.getUser()?.userId!!)
+    }
+
 }

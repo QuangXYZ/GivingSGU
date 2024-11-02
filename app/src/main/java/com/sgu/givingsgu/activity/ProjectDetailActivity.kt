@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.quang.lilyshop.activity.BaseActivity
 import com.sgu.givingsgu.adapter.CommentAdapter
 import com.sgu.givingsgu.adapter.DonorAdapter
-import com.sgu.givingsgu.adapter.ProjectAdapter
+import com.sgu.givingsgu.adapter.ImageAdapter
 import com.sgu.givingsgu.databinding.ActivityProjectDetailBinding
 import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.viewmodel.ProjectDetailViewModel
@@ -23,9 +23,13 @@ class ProjectDetailActivity : BaseActivity() {
     private lateinit var binding: ActivityProjectDetailBinding
     private lateinit var commentAdapter: CommentAdapter
     private lateinit var donorAdapter: DonorAdapter
+    private lateinit var imageAdapter: ImageAdapter
 
-    private lateinit var project : Project
+
+    private lateinit var project: Project
     private lateinit var viewModel: ProjectDetailViewModel
+    private lateinit var images: List<String>
+
 
     var isExpanded: Boolean = false
 
@@ -37,7 +41,7 @@ class ProjectDetailActivity : BaseActivity() {
         init()
         settingUpListener()
 
-        }
+    }
 
 
     fun init() {
@@ -49,16 +53,14 @@ class ProjectDetailActivity : BaseActivity() {
             intent.getParcelableExtra("project")!!
         }
 
-        initComment()
-        initTopDonor()
+
 
         binding.projectName.text = project.name
         binding.projectDescription.text = project.description
         if (project.imageUrls != null) {
-            if (project.imageUrls?.split(",")?.toTypedArray()?.get(0) != null) {
-                val img = project.imageUrls?.split(",")?.toTypedArray()
-                Glide.with(this).load(img?.get(0)).into(binding.projectImg)
-            }
+            images = project.imageUrls?.split(",")?.toList()!!
+
+            Glide.with(this).load(images[0]).into(binding.projectImg)
         }
         binding.projectAmount.text = project.currentAmount.toString() + " VND"
         val percent = (project.currentAmount?.div(project.targetAmount)
@@ -70,17 +72,21 @@ class ProjectDetailActivity : BaseActivity() {
         binding.projectTarget.text = project.targetAmount.toString() + " VND"
 
 
-
         val fullText = project.description
-        binding.projectDescription.setText(fullText)
+        binding.projectDescription.text = fullText
         // Kiểm tra nếu nội dung quá dài thì mặc định chỉ hiển thị 3 dòng
         binding.projectDescription.post(Runnable {
-            if (binding.projectDescription.getLineCount() > 4) {
+            if (binding.projectDescription.lineCount > 4) {
                 binding.projectDescription.setMaxLines(4)
-                binding.projectDescription.setEllipsize(TextUtils.TruncateAt.END)
+                binding.projectDescription.ellipsize = TextUtils.TruncateAt.END
             }
         })
+
+        initComment()
+        initTopDonor()
+        initImage()
     }
+
     fun settingUpListener() {
         binding.backBtn.setOnClickListener {
             finish()
@@ -92,11 +98,11 @@ class ProjectDetailActivity : BaseActivity() {
                 if (isExpanded) {
                     // Nếu đang mở rộng, thu gọn văn bản lại
                     binding.projectDescription.setMaxLines(4)
-                    binding.projectDescription.setEllipsize(TextUtils.TruncateAt.END)
+                    binding.projectDescription.ellipsize = TextUtils.TruncateAt.END
                 } else {
                     // Nếu đang thu gọn, mở rộng văn bản ra
                     binding.projectDescription.setMaxLines(Int.MAX_VALUE)
-                    binding.projectDescription.setEllipsize(null)
+                    binding.projectDescription.ellipsize = null
                 }
                 isExpanded = !isExpanded
             }
@@ -115,8 +121,9 @@ class ProjectDetailActivity : BaseActivity() {
             binding.commentRecyclerView.isNestedScrollingEnabled = true
             binding.commentRecyclerView.layoutManager = LinearLayoutManager(this)
         })
-        project?.projectId?.let { viewModel.fetchAllComment(it) }
+        project.projectId.let { viewModel.fetchAllComment(it) }
     }
+
     private fun initTopDonor() {
         viewModel.donation.observe(this, Observer {
             donorAdapter = DonorAdapter(it.toMutableList())
@@ -124,27 +131,38 @@ class ProjectDetailActivity : BaseActivity() {
             binding.topDonorRecyclerView.isNestedScrollingEnabled = true
             binding.topDonorRecyclerView.layoutManager = LinearLayoutManager(this)
         })
-        project?.projectId?.let { viewModel.fetchTopDonors(it) }
+        project.projectId.let { viewModel.fetchTopDonors(it) }
     }
 
+    private fun initImage() {
+        images = project.imageUrls?.split(",") ?: listOf("https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg","https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg","https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg")
 
-    fun calculateTimeRemaining(endDate: Date): String {
-        val currentDate = Date()
-        val diffInMillis = endDate.time - currentDate.time
+        imageAdapter = ImageAdapter(images)
 
-        return if (diffInMillis < 0) {
-            "Đã kết thúc"
+        binding.imageRecyclerView.adapter = imageAdapter
+        binding.imageRecyclerView.isNestedScrollingEnabled = true
+        binding.imageRecyclerView.layoutManager =   LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+}
+
+
+fun calculateTimeRemaining(endDate: Date): String {
+    val currentDate = Date()
+    val diffInMillis = endDate.time - currentDate.time
+
+    return if (diffInMillis < 0) {
+        "Đã kết thúc"
+    } else {
+        val diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS)
+        val diffInHours = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS) % 24
+        val diffInMinutes = TimeUnit.MINUTES.convert(diffInMillis, TimeUnit.MILLISECONDS) % 60
+
+        // Kiểm tra nếu số ngày < 1 thì chỉ hiển thị giờ
+        if (diffInDays < 1) {
+            "$diffInHours giờ, $diffInMinutes phút"
         } else {
-            val diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS)
-            val diffInHours = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS) % 24
-            val diffInMinutes = TimeUnit.MINUTES.convert(diffInMillis, TimeUnit.MILLISECONDS) % 60
-
-            // Kiểm tra nếu số ngày < 1 thì chỉ hiển thị giờ
-            if (diffInDays < 1) {
-                "$diffInHours giờ, $diffInMinutes phút"
-            } else {
-                "$diffInDays ngày, $diffInHours giờ"
-            }
+            "$diffInDays ngày, $diffInHours giờ"
         }
     }
 }

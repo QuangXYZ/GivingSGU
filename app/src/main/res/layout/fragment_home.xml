@@ -19,8 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:elevation="4dp"
             android:title="My App"
+            app:liftOnScroll="true"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
             app:subtitleTextColor="@color/text_color">
@@ -31,6 +31,8 @@
                 android:layout_marginTop="36dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                app:elevation="4dp"
+
                 android:paddingBottom="12dp">
 
                 <LinearLayout
@@ -71,7 +73,7 @@
                         android:layout_width="42dp"
                         android:layout_height="42dp"
                         android:padding="10dp"
-                        android:src="@drawable/bell" />
+                        android:src="@drawable/search" />
 
                 </LinearLayout>
 
@@ -82,7 +84,11 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
@@ -192,6 +198,10 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
