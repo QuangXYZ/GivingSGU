@@ -10,6 +10,8 @@ import com.sgu.givingsgu.activity.ProjectDetailActivity
 import com.sgu.givingsgu.databinding.SingleProjectLayoutBinding
 import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.network.response.ProjectResponse
+import com.sgu.givingsgu.repository.ProjectRepository
+import com.sgu.givingsgu.utils.DataLocalManager
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -20,6 +22,9 @@ import java.util.concurrent.TimeUnit
 class ProjectAdapter(val projects: MutableList<ProjectResponse>) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
 
     private lateinit var context: Context
+
+    private var projectRepository = ProjectRepository()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
         val binding =
@@ -51,6 +56,23 @@ class ProjectAdapter(val projects: MutableList<ProjectResponse>) : RecyclerView.
         }
 
         holder.binding.likeCount.text = projects[position].likeCount.toString()
+
+        holder.binding.homeLikeBtn.setOnClickListener {
+            if (!DataLocalManager.isLoggedIn()) return@setOnClickListener
+            if(holder.binding.homeLikeBtn.isChecked) {
+                projectRepository.unlikeProject(projects[position].project.projectId)
+                holder.binding.likeCount.text = (projects[position].likeCount - 1).toString()
+
+
+            }
+            else {
+                projectRepository.likeProject(projects[position].project.projectId)
+                holder.binding.likeCount.text = (projects[position].likeCount + 1).toString()
+
+            }
+
+
+        }
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, ProjectDetailActivity::class.java)

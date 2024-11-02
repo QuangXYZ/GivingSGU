@@ -237,6 +237,23 @@
                         android:textSize="12sp"
                         />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ảnh/Video"
+                        android:layout_marginTop="12dp"
+                        android:textColor="@color/dart_blue"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/imageRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        />
+
+
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -11,6 +11,8 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.Response
+
+import retrofit2.http.DELETE
 import retrofit2.http.PATCH
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -22,6 +24,16 @@ interface ProjectService {
     @POST("api/projects")
     suspend fun createProject(@Body project: ProjectDTO): Response<ProjectDTO>
 
+
+    @GET("api/projects/{projectId}")
+    fun likeProject(@Path("projectId") projectId: Long,@Query("userId") userId: Long,): Call<ResponseWrapper<List<String>>>
+
+
+    @DELETE("api/projects/{projectId}")
+    fun unlikeProject(@Path("projectId") projectId: Long,@Query("userId") userId: Long,): Call<ResponseWrapper<List<String>>>
+
+  
     @PATCH("api/projects/{id}")
     suspend fun updateProject(@Path("id") id: Long, @Body project: ProjectDTO): Response<ProjectDTO>
+
 }
