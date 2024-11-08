@@ -21,11 +21,12 @@ data class User(
         studentId: String,
     ) : this(0, username, password, email, phoneNumber, facultyId, fullName, studentId, "user")
 
-    constructor(
-        email: String,
-        password: String,
-        fullName: String,
-        phoneNumber: String
-    ) : this(0, "", password, email, phoneNumber, 0, fullName, "", "user")
+//    constructor(
+//        email: String,
+//        password: String,
+//        fullName: String,
+//        phoneNumber: String,
+//        studentId: String
+//    ) : this(0, "", password, email, phoneNumber, 0, fullName, studentId, "user")
 
 }
