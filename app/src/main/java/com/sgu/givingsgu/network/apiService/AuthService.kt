@@ -1,5 +1,6 @@
 package com.sgu.givingsgu.network.apiService
 import com.sgu.givingsgu.model.User
+import com.sgu.givingsgu.network.request.RegisterRequest
 import com.sgu.givingsgu.network.response.LoginResponse
 import com.sgu.givingsgu.network.response.ResponseWrapper
 import retrofit2.Call
@@ -16,5 +17,5 @@ interface AuthService {
     ): Call<ResponseWrapper<LoginResponse>>
 
     @POST("/api/auth/register")
-    fun registerUser(@Body user: User): Call<ResponseWrapper<User>>
-}
+    //fun registerUser(@Body user: User): Call<ResponseWrapper<User>>
+    fun registerUser(@Body user: RegisterRequest): Call<ResponseWrapper<User>>}

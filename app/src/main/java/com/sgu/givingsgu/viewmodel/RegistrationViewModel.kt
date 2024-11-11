@@ -3,6 +3,7 @@ package com.sgu.givingsgu.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgu.givingsgu.model.User
+import com.sgu.givingsgu.network.request.RegisterRequest
 import com.sgu.givingsgu.network.response.ResponseWrapper
 import com.sgu.givingsgu.repository.AuthRepository
 import com.sgu.givingsgu.viewmodel.LoginViewModel.AuthCallback
@@ -15,7 +16,7 @@ class RegistrationViewModel : ViewModel() {
     private val authRepository = AuthRepository()
 
     fun registerUser(email : String, password : String, phone : String, fullName : String, studentid : String, faculty: Long ,callback: AuthCallback) {
-        val user = User(username = email, password = password, email = email, phoneNumber = phone, facultyId = faculty, fullName = fullName, studentId = studentid)
+        val user = RegisterRequest(username = email, password = password, email = email, phoneNumber = phone, facultyId = faculty, fullName = fullName, studentId = studentid, role = "USER", imageUrl = "", point = 0)
         viewModelScope.launch {
 
             authRepository.registerUser(user).enqueue(object : Callback<ResponseWrapper<User>> {

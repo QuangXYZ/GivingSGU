@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.quang.lilyshop.activity.BaseActivity
 import com.sgu.givingsgu.activity.Fragment.ProfileFragment
@@ -15,6 +16,14 @@ import com.sgu.givingsgu.viewmodel.LoginViewModel
 class LoginActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel : LoginViewModel
+
+    private val registerActivityResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +39,7 @@ class LoginActivity : BaseActivity() {
         viewModel = LoginViewModel()
         binding.forgotPasswordTextView.setOnClickListener {
             val intent = Intent(this, RegistrationActivity::class.java)
-            startActivity(intent)
+            registerActivityResultLauncher.launch(intent)
         }
 
         binding.loginButton.setOnClickListener(View.OnClickListener {
