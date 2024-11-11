@@ -138,7 +138,10 @@ class CreateFragment : Fragment() {
 
         val datePickerDialog =
             DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
-                val date = "$selectedYear-${selectedMonth + 1}-$selectedDay"
+                // Đảm bảo tháng và ngày đều có hai chữ số
+                val formattedMonth = String.format("%02d", selectedMonth + 1)
+                val formattedDay = String.format("%02d", selectedDay)
+                val date = "$selectedYear-$formattedMonth-$formattedDay"
                 onDateSelected(date)
             }, year, month, day)
 
@@ -147,6 +150,7 @@ class CreateFragment : Fragment() {
 
     private fun createProjectFromInputs(): ProjectDTO {
         return ProjectDTO(
+            projectId = 0,
             name = binding.projectName.text.toString(),
             description = binding.projectDescription.text.toString(),
             startDate = binding.projectStartDate.text.toString(),
