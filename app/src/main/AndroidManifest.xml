@@ -11,8 +11,8 @@
         android:maxSdkVersion="32" />
 
     <application
-        android:name=".utils.MyApp"
         android:allowBackup="true"
+        android:name=".utils.MyApp"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -21,12 +21,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GivingSGU"
         tools:replace="theme"
+
+
         tools:targetApi="31">
+ <!-- <activity -->
+        <!-- android:name=".adapter.ImageMainActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
-            android:name=".activity.UpdateProjectActivity"
+            android:name=".activity.RedeemActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.AdminProjectDetailActivity"
+            android:name=".activity.SuccessActivity"
             android:exported="false" /> <!-- <activity -->
         <!-- android:name=".adapter.ImageMainActivity" -->
         <!-- android:exported="false" /> -->
@@ -41,7 +46,19 @@
             android:exported="false" />
         <activity
             android:name=".activity.DonationActivity"
-            android:exported="false" />
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="app"
+                    android:scheme="demozpdk" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.ProjectDetailActivity"
             android:exported="false" />
