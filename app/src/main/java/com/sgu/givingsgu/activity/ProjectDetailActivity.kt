@@ -144,25 +144,26 @@ class ProjectDetailActivity : BaseActivity() {
         binding.imageRecyclerView.layoutManager =   LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
-}
+    fun calculateTimeRemaining(endDate: Date): String {
+        val currentDate = Date()
+        val diffInMillis = endDate.time - currentDate.time
 
-
-fun calculateTimeRemaining(endDate: Date): String {
-    val currentDate = Date()
-    val diffInMillis = endDate.time - currentDate.time
-
-    return if (diffInMillis < 0) {
-        "Đã kết thúc"
-    } else {
-        val diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS)
-        val diffInHours = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS) % 24
-        val diffInMinutes = TimeUnit.MINUTES.convert(diffInMillis, TimeUnit.MILLISECONDS) % 60
-
-        // Kiểm tra nếu số ngày < 1 thì chỉ hiển thị giờ
-        if (diffInDays < 1) {
-            "$diffInHours giờ, $diffInMinutes phút"
+        return if (diffInMillis < 0) {
+            "Đã kết thúc"
         } else {
-            "$diffInDays ngày, $diffInHours giờ"
+            val diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS)
+            val diffInHours = TimeUnit.HOURS.convert(diffInMillis, TimeUnit.MILLISECONDS) % 24
+            val diffInMinutes = TimeUnit.MINUTES.convert(diffInMillis, TimeUnit.MILLISECONDS) % 60
+
+            // Kiểm tra nếu số ngày < 1 thì chỉ hiển thị giờ
+            if (diffInDays < 1) {
+                "$diffInHours giờ, $diffInMinutes phút"
+            } else {
+                "$diffInDays ngày, $diffInHours giờ"
+            }
         }
     }
+
 }
+
+

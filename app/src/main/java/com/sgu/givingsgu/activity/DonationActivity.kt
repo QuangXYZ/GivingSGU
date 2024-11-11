@@ -1,29 +1,32 @@
 package com.sgu.givingsgu.activity
 
 import android.content.Intent
-import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.quang.lilyshop.activity.BaseActivity
 import com.sgu.givingsgu.R
 import com.sgu.givingsgu.databinding.ActivityDonationBinding
-import com.sgu.givingsgu.databinding.ActivityMainBinding
-import com.sgu.givingsgu.network.request.TransactionRequest
+import com.sgu.givingsgu.model.Project
+import com.sgu.givingsgu.model.Transaction
+import com.sgu.givingsgu.utils.DataLocalManager
 import com.sgu.givingsgu.viewmodel.DonationViewModel
+import com.sgu.givingsgu.zalo.Helper.CreateOrder
 import vn.momo.momo_partner.AppMoMoLib
 import vn.momo.momo_partner.MoMoParameterNamePayment
-import vn.momo.momo_partner.utils.MoMoConfig
+import vn.zalopay.sdk.Environment
+import vn.zalopay.sdk.ZaloPayError
+import vn.zalopay.sdk.ZaloPaySDK
+import vn.zalopay.sdk.listeners.PayOrderListener
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -32,7 +35,9 @@ class DonationActivity : BaseActivity() {
     private var lastClickedCard: MaterialCardView? = null
     private var lastClickedTextView: TextView? = null
     private var current = ""
-    private lateinit var viewModel : DonationViewModel
+    private lateinit var viewModel: DonationViewModel
+    private lateinit var project: Project
+    private var paymentMethod = 0;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,10 +51,25 @@ class DonationActivity : BaseActivity() {
 
     private fun init() {
         viewModel = DonationViewModel()
-        AppMoMoLib.getInstance().setEnvironment(AppMoMoLib.ENVIRONMENT.PRODUCTION) // Hoặc AppMoMoLib.ENVIRONMENT.PRODUCTION
 
+        // MoMo SDK Init
+        AppMoMoLib.getInstance()
+            .setEnvironment(AppMoMoLib.ENVIRONMENT.DEVELOPMENT) // Hoặc AppMoMoLib.ENVIRONMENT.PRODUCTION
+
+        // ZaloPay SDK Init
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+        ZaloPaySDK.init(2553, Environment.SANDBOX)
+
+
+        project = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra("project", Project::class.java)!!
+        } else {
+            intent.getParcelableExtra("project")!!
+        }
 
     }
+
     private fun settingUpListener() {
         setCardListener(binding.cardView1, binding.textView1)
         setCardListener(binding.cardView2, binding.textView2)
@@ -58,70 +78,87 @@ class DonationActivity : BaseActivity() {
         setCardListener(binding.cardView5, binding.textView5)
         setCardListener(binding.cardView6, binding.textView6)
 
+        binding.momoPayment.setOnClickListener {
+            paymentMethod = 0
+            binding.momoPayment.strokeColor = ContextCompat.getColor(this, R.color.orange)
+            binding.zaloPayment.strokeColor = ContextCompat.getColor(this, R.color.lightGrey)
+        }
+        binding.zaloPayment.setOnClickListener {
+            paymentMethod = 1
+            binding.zaloPayment.strokeColor = ContextCompat.getColor(this, R.color.orange)
+            binding.momoPayment.strokeColor = ContextCompat.getColor(this, R.color.lightGrey)
+        }
+
         binding.donateBtn.setOnClickListener(View.OnClickListener {
-            requestPayment()
+            if (paymentMethod == 0) {
+                requestMomoPayment()
+            } else {
+                requestZaloPayPayment()
+            }
         })
 
 
     }
+
+
     private fun setCardListener(cardView: MaterialCardView, textView: TextView) {
-            cardView.setOnClickListener {
-                lastClickedCard?.setCardBackgroundColor(
-                    ContextCompat.getColor(this, R.color.white)
-                )
-                lastClickedTextView?.setTextColor(
-                    ContextCompat.getColor(this, R.color.text_color)
-                )
-                cardView.setCardBackgroundColor(
-                    ContextCompat.getColor(this, R.color.orange)
-                )
-                textView.setTextColor(
-                    ContextCompat.getColor(this, R.color.white)
-                )
-                lastClickedCard = cardView
-                lastClickedTextView = textView
-                binding.amount.setText(textView.text.toString())
+        cardView.setOnClickListener {
+            lastClickedCard?.setCardBackgroundColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
+            lastClickedTextView?.setTextColor(
+                ContextCompat.getColor(this, R.color.text_color)
+            )
+            cardView.setCardBackgroundColor(
+                ContextCompat.getColor(this, R.color.orange)
+            )
+            textView.setTextColor(
+                ContextCompat.getColor(this, R.color.white)
+            )
+            lastClickedCard = cardView
+            lastClickedTextView = textView
+            binding.amount.setText(textView.text.toString())
+        }
+
+
+        binding.amount.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString() != current) {
+                    binding.amount.removeTextChangedListener(this)
+
+                    // Loại bỏ định dạng cũ
+                    val cleanString = s.toString().replace("""[,.]""".toRegex(), "")
+
+                    // Chuyển chuỗi về dạng số
+                    val parsed = cleanString.toDoubleOrNull() ?: 0.0
+
+                    // Định dạng số theo kiểu tiền tệ
+                    val formatted = NumberFormat.getNumberInstance(Locale.US).format(parsed)
+
+                    current = formatted
+                    binding.amount.setText(formatted)
+                    binding.amount.setSelection(formatted.length)
+
+                    binding.amount.addTextChangedListener(this)
+                }
             }
 
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            binding.amount.addTextChangedListener(object : TextWatcher {
-
-                override fun afterTextChanged(s: Editable?) {
-                    if (s.toString() != current) {
-                        binding.amount.removeTextChangedListener(this)
-
-                        // Loại bỏ định dạng cũ
-                        val cleanString = s.toString().replace("""[,.]""".toRegex(), "")
-
-                        // Chuyển chuỗi về dạng số
-                        val parsed = cleanString.toDoubleOrNull() ?: 0.0
-
-                        // Định dạng số theo kiểu tiền tệ
-                        val formatted = NumberFormat.getNumberInstance(Locale.US).format(parsed)
-
-                        current = formatted
-                        binding.amount.setText(formatted)
-                        binding.amount.setSelection(formatted.length)
-
-                        binding.amount.addTextChangedListener(this)
-                    }
-                }
-
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            })
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
         binding.previous.setOnClickListener {
             finish()
         }
-        binding.momoPayment.setOnClickListener{
+        binding.momoPayment.setOnClickListener {
             binding.momoPayment.strokeColor = ContextCompat.getColor(this, R.color.orange)
             binding.zaloPayment.strokeColor = ContextCompat.getColor(this, R.color.lightGrey)
 
         }
 
-        binding.zaloPayment.setOnClickListener{
+        binding.zaloPayment.setOnClickListener {
             binding.zaloPayment.strokeColor = ContextCompat.getColor(this, R.color.orange)
             binding.momoPayment.strokeColor = ContextCompat.getColor(this, R.color.lightGrey)
 
@@ -130,21 +167,22 @@ class DonationActivity : BaseActivity() {
     }
 
 
-    private fun requestPayment() {
+    private fun requestMomoPayment() {
         AppMoMoLib.getInstance().setAction(AppMoMoLib.ACTION.PAYMENT);
         AppMoMoLib.getInstance().setActionType(AppMoMoLib.ACTION_TYPE.GET_TOKEN);
         // Prepare data for payment request
         val requestData = HashMap<String, Any?>()
 
         requestData[MoMoParameterNamePayment.MERCHANT_NAME] = "MOMO_DEMO"
-        requestData[MoMoParameterNamePayment.MERCHANT_CODE] = "MOMOT5BZ20231213_TEST"
+        requestData[MoMoParameterNamePayment.MERCHANT_CODE] = "MOMOIQA420180417977366"
         requestData[MoMoParameterNamePayment.MERCHANT_NAME_LABEL] = "Merchant Name Label"
-        requestData[MoMoParameterNamePayment.AMOUNT] = binding.amount.text.toString().replace(",", "")
-        requestData[MoMoParameterNamePayment.DESCRIPTION] = "Payment for X"
+        requestData[MoMoParameterNamePayment.AMOUNT] =
+            binding.amount.text.toString().replace(",", "")
+        requestData[MoMoParameterNamePayment.DESCRIPTION] = "Payment for donation"
 
         // Payment code (unique for each transaction)
         requestData[MoMoParameterNamePayment.REQUEST_ID] = System.currentTimeMillis().toString()
-        requestData[MoMoParameterNamePayment.PARTNER_CODE] = "MOMOT5BZ20231213_TEST"
+        requestData[MoMoParameterNamePayment.PARTNER_CODE] = "MOMOIQA420180417"
         requestData[MoMoParameterNamePayment.LANGUAGE] = "vi" // or "en"
         requestData[MoMoParameterNamePayment.REQUEST_TYPE] = "payment"
 
@@ -164,12 +202,22 @@ class DonationActivity : BaseActivity() {
 
                 if (status == 0) { // Thành công
                     val message = data.getStringExtra("message")
-                    val token = data.getStringExtra("data").toString() // Dữ liệu token trả về từ MoMo
+                    val token =
+                        data.getStringExtra("data").toString() // Dữ liệu token trả về từ MoMo
                     val amount = data.getStringExtra("amount").toString()
 
 //                    val transactionRequest = TransactionRequest(userId, , amount.toDouble(), "MoMo", token)
 
-                    viewModel.saveTransaction(1, 1, amount.toDouble(), "MoMo")
+//                    DataLocalManager.getUser()
+//                        ?.let {
+//                            viewModel.saveTransaction(
+//                                it.userId,
+//                                project.projectId,
+//                                amount.toDouble(),
+//                                "MoMo",
+//
+//                            )
+//                        }
                     Toast.makeText(this, "Payment success! Token: $token", Toast.LENGTH_LONG).show()
                 } else {
                     // Thất bại
@@ -181,5 +229,90 @@ class DonationActivity : BaseActivity() {
     }
 
 
+    private fun requestZaloPayPayment() {
+        val orderApi = CreateOrder()
+        try {
+            val data = orderApi.createOrder(binding.amount.text.toString().replace(",", ""))
+            val code = data.getString("return_code")
+            if (code == "1") {
+                var token = data.getString("zp_trans_token")
+                ZaloPaySDK.getInstance().payOrder(
+                    this,
+                    token,
+                    "demozpdk://app",
+                    object : PayOrderListener {
+                        override fun onPaymentSucceeded(
+                            transactionId: String,
+                            transToken: String,
+                            appTransID: String
+
+                        ) {
+
+                            DataLocalManager.getUser()
+                                ?.let {
+                                    viewModel.saveTransaction(
+                                        transactionId,
+                                        it.userId,
+                                        project.projectId,
+                                        binding.amount.text.toString().replace(",", "").toDouble(),
+                                        "Zalo Pay",
+                                        transToken,
+                                        object : DonationViewModel.TransactionCallback {
+                                            override fun onSuccess(transaction: Transaction?) {
+                                                val intent = Intent(this@DonationActivity, SuccessActivity::class.java)
+                                                startActivity(intent)
+                                                finish()
+                                            }
+                                            override fun onFail(error: String) {
+                                            }
+                                        }
+                                    )
+                                }
+
+
+                        }
+
+                        override fun onPaymentCanceled(zpTransToken: String, appTransID: String) {
+                            MaterialAlertDialogBuilder(this@DonationActivity)
+                                .setTitle("User Cancel Payment")
+                                .setBackground(ContextCompat.getDrawable(this@DonationActivity, R.color.white))
+                                .setMessage(String.format("zpTransToken: %s \n", zpTransToken))
+                                .setPositiveButton(
+                                    "OK"
+                                ) { dialog, which -> }
+                                .setNegativeButton("Cancel", null).show()
+                        }
+
+                        override fun onPaymentError(
+                            zaloPayError: ZaloPayError,
+                            zpTransToken: String,
+                            appTransID: String
+                        ) {
+                            MaterialAlertDialogBuilder(this@DonationActivity)
+                                .setTitle("Payment Fail")
+                                .setBackground(ContextCompat.getDrawable(this@DonationActivity, R.color.white))
+                                .setMessage(
+                                    String.format(
+                                        "ZaloPayErrorCode: %s \nTransToken: %s",
+                                        zaloPayError.toString(),
+                                        zpTransToken
+                                    )
+                                )
+                                .setPositiveButton(
+                                    "OK"
+                                ) { dialog, which -> }
+                                .setNegativeButton("Cancel", null).show()
+                        }
+                    })
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        ZaloPaySDK.getInstance().onResult(intent)
+    }
 
 }

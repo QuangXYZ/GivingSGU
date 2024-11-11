@@ -49,6 +49,11 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
+    implementation(fileTree(mapOf(
+        "dir" to "C:\\Users\\HP\\Downloads\\DemoZPDK_Android\\DemoZPDK_Android\\ZPDK-Android",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf("")
+    )))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,7 +77,8 @@ dependencies {
     implementation("com.github.momo-wallet:mobile-sdk:1.0.7")
     implementation("com.auth0:java-jwt:3.18.2")
     implementation("com.github.stfalcon-studio:StfalconImageViewer:v1.0.1")
-
+    implementation("commons-codec:commons-codec:1.17.1")
+    implementation ("com.vipulasri:ticketview:1.1.2")
 
 
 
