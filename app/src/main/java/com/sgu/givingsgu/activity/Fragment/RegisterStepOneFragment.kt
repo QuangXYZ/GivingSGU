@@ -33,8 +33,9 @@ class RegisterStepOneFragment : Fragment() {
             val email = binding.password.text.toString()
 
             if (name.isEmpty() || email.isEmpty()) {
-                // Show an error message or a toast
                 Toast.makeText(context, "Email and Password cannot be empty", Toast.LENGTH_SHORT).show()
+            } else if (binding.checkbox.isChecked == false) {
+                Toast.makeText(context, "Please check the box", Toast.LENGTH_SHORT).show()
             } else {
                 val bundle = Bundle().apply {
                     putString("name", name)

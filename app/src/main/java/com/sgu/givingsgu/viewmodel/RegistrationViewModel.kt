@@ -15,10 +15,9 @@ import retrofit2.Response
 class RegistrationViewModel : ViewModel() {
     private val authRepository = AuthRepository()
 
-    fun registerUser(email : String, password : String, phone : String, fullName : String, studentid : String, faculty: Long ,callback: AuthCallback) {
-        val user = RegisterRequest(username = email, password = password, email = email, phoneNumber = phone, facultyId = faculty, fullName = fullName, studentId = studentid, role = "USER", imageUrl = "", point = 0)
+    fun registerUser(email : String, password : String, phone : String, fullName : String, studentid : String, faculty: Int ,callback: AuthCallback) {
+        val user = RegisterRequest(username = email, password = password, email = email, phoneNumber = phone, facultyId = faculty, fullName = fullName, studentId = studentid, role = "USER", imageUrl = "", points = 0)
         viewModelScope.launch {
-
             authRepository.registerUser(user).enqueue(object : Callback<ResponseWrapper<User>> {
                 override fun onResponse(
                     call: Call<ResponseWrapper<User>>,

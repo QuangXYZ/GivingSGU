@@ -5,10 +5,10 @@ data class RegisterRequest   (
     val password: String,
     val email: String,
     val phoneNumber: String,
-    val facultyId: Long,
+    val facultyId: Int,
     val fullName: String,
     val studentId: String,
     val role: String,
     val imageUrl: String,
-    val point: Int
+    val points: Int
 )

@@ -12,7 +12,7 @@
   <de.hdodenhof.circleimageview.CircleImageView
       android:layout_width="48dp"
       android:layout_height="48dp"
-      android:src="@drawable/mail"
+      android:src="@drawable/email"
       />
 
     <TextView
@@ -40,8 +40,10 @@
         app:boxBackgroundColor="@color/white"
         app:endIconMode="clear_text"
         app:cursorColor="@color/black"
-        app:hintAnimationEnabled="false"
-        app:hintEnabled="false">
+        android:textColorHint="#A4A4A4"
+        app:hintTextColor="@color/hint_color"
+        app:hintEnabled="true"
+        app:hintAnimationEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/name"
@@ -65,8 +67,10 @@
         app:boxBackgroundColor="@color/white"
         app:endIconMode="password_toggle"
         app:cursorColor="@color/black"
-        app:hintAnimationEnabled="false"
-        app:hintEnabled="false">
+        android:textColorHint="#A4A4A4"
+        app:hintTextColor="@color/hint_color"
+        app:hintEnabled="true"
+        app:hintAnimationEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
@@ -89,9 +93,11 @@
         android:layout_marginTop="12dp"
         android:orientation="horizontal">
         <CheckBox
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
+
             />
 
         <TextView

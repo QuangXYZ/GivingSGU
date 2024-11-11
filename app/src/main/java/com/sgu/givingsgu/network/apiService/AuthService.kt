@@ -17,5 +17,4 @@ interface AuthService {
     ): Call<ResponseWrapper<LoginResponse>>
 
     @POST("/api/auth/register")
-    //fun registerUser(@Body user: User): Call<ResponseWrapper<User>>
     fun registerUser(@Body user: RegisterRequest): Call<ResponseWrapper<User>>}

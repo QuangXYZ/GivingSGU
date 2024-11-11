@@ -10,7 +10,7 @@ data class User(
     val fullName: String,
     val studentId: String,
     val role: String,
-    val point: Int
+    val points: Int
 ) {
     constructor(
         username: String,
@@ -20,14 +20,6 @@ data class User(
         facultyId: Long,
         fullName: String,
         studentId: String,
-    ) : this(0, username, password, email, phoneNumber, facultyId, fullName, studentId, "user", 0)
-
-//    constructor(
-//        email: String,
-//        password: String,
-//        fullName: String,
-//        phoneNumber: String,
-//        studentId: String
-//    ) : this(0, "", password, email, phoneNumber, 0, fullName, studentId, "user")
+    ) : this(0, username, password, email, phoneNumber, facultyId, fullName, studentId, "USER", 0)
 
 }

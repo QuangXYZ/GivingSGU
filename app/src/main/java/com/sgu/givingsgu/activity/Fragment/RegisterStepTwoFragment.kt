@@ -43,25 +43,23 @@ class RegisterStepTwoFragment : Fragment() {
             val fullname = binding.name.text.toString().trim()
             val studentid = binding.password.text.toString().trim()
             val selectedFaculty = binding.faculty.text.toString()
-            val faculty = faculties.indexOf(selectedFaculty).toLong()
+            val faculty = faculties.indexOf(selectedFaculty)
             val phone = binding.phone.text.toString().trim()
 
-            if (fullname.isNotEmpty() && studentid.isNotEmpty() && faculty!= -1L && phone.isNotEmpty()) {
-                println("Email: $email, Password: $password, Fullname: $fullname, Student ID: $studentid, Faculty: $faculty, Phone: $phone")
-                //Toast.makeText(requireContext(), "Email: $email, Password: $password, Fullname: $fullname, Student ID: $studentid, Faculty: $faculty, Phone: $phone", Toast.LENGTH_SHORT).show()
-                viewModel.registerUser(email, password, phone, fullname, studentid, faculty, object : RegistrationViewModel.AuthCallback {
-                    override fun onSuccess() {
-                        Toast.makeText(requireContext(), "Register success", Toast.LENGTH_SHORT).show()
-                        activity?.let {
-                            it.setResult(Activity.RESULT_OK)
-                            it.finish()
+            if (fullname.isNotEmpty() && studentid.isNotEmpty() && faculty!= -1 && phone.isNotEmpty()) {
+                if (binding.checkbox.isChecked == false) {
+                    Toast.makeText(context, "Please check the box", Toast.LENGTH_SHORT).show()
+                } else {
+                    viewModel.registerUser(email, password, phone, fullname, studentid, faculty, object : RegistrationViewModel.AuthCallback {
+                        override fun onSuccess() {
+                            Toast.makeText(requireContext(), "Register success", Toast.LENGTH_SHORT).show()
+                            activity?.finish()
                         }
-                    }
-                    override fun onFailure(message: String) {
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                    }
-                })
-
+                        override fun onFailure(message: String) {
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
             } else {
                 Toast.makeText(requireContext(), "Please enter enough information", Toast.LENGTH_SHORT).show()            }
         }
