@@ -6,19 +6,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".activity.Fragment.RegisterStepOneFragment">
+    tools:context=".activity.Fragment.RegisterStepTwoFragment">
 
-
-  <de.hdodenhof.circleimageview.CircleImageView
-      android:layout_width="48dp"
-      android:layout_height="48dp"
-      android:src="@drawable/email"
-      />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/profile"
+        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Account "
+        android:text="Personal Information"
         android:layout_marginTop="12dp"
         android:textColor="@color/text_color"
         android:textSize="24sp"
@@ -50,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_background"
-            android:hint="Email"
+            android:hint="Full Name"
             android:textColor="@color/text_color"
             android:imeOptions="actionNext"
             android:inputType="text"
@@ -77,14 +76,75 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_background"
-            android:hint="Password"
+            android:hint="Student ID"
             android:textColor="@color/text_color"
             android:imeOptions="actionNext"
             android:inputType="text"
             android:maxLines="1"
             android:textSize="14sp" />
 
+
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:focusableInTouchMode="true"
+        app:boxBackgroundColor="@color/white"
+        app:endIconMode="dropdown_menu"
+        app:cursorColor="@color/black"
+        android:textColorHint="#A4A4A4"
+        app:hintTextColor="@color/hint_color"
+        app:hintEnabled="true"
+        app:hintAnimationEnabled="true">
+
+        <AutoCompleteTextView
+            android:id="@+id/faculty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:hint="Faculty"
+            android:textColor="@color/text_color"
+            android:imeOptions="actionNext"
+            android:inputType="none"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:maxLines="1"
+            android:paddingStart="50px"
+            android:textSize="14sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:focusableInTouchMode="true"
+        app:boxBackgroundColor="@color/white"
+        app:endIconMode="password_toggle"
+        app:cursorColor="@color/black"
+        android:textColorHint="#A4A4A4"
+        app:hintTextColor="@color/hint_color"
+        app:hintEnabled="true"
+        app:hintAnimationEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:hint="Phone"
+            android:textColor="@color/text_color"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="14sp" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -97,7 +157,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-
             />
 
         <TextView
@@ -120,10 +179,5 @@
 
         android:textColor="@color/white"
         android:textStyle="bold" />
-
-
-
-
-
 
 </LinearLayout>

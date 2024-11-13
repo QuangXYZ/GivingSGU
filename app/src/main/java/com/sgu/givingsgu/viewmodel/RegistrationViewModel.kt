@@ -3,6 +3,7 @@ package com.sgu.givingsgu.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sgu.givingsgu.model.User
+import com.sgu.givingsgu.network.request.RegisterRequest
 import com.sgu.givingsgu.network.response.ResponseWrapper
 import com.sgu.givingsgu.repository.AuthRepository
 import com.sgu.givingsgu.viewmodel.LoginViewModel.AuthCallback
@@ -14,10 +15,9 @@ import retrofit2.Response
 class RegistrationViewModel : ViewModel() {
     private val authRepository = AuthRepository()
 
-    fun registerUser(email : String, password : String, phone : String, fullName : String, callback: AuthCallback) {
-        val user = User( email, password, fullName, phone)
+    fun registerUser(email : String, password : String, phone : String, fullName : String, studentid : String, faculty: Int ,callback: AuthCallback) {
+        val user = RegisterRequest(username = email, password = password, email = email, phoneNumber = phone, facultyId = faculty, fullName = fullName, studentId = studentid, role = "USER", imageUrl = "", points = 100)
         viewModelScope.launch {
-
             authRepository.registerUser(user).enqueue(object : Callback<ResponseWrapper<User>> {
                 override fun onResponse(
                     call: Call<ResponseWrapper<User>>,
@@ -28,7 +28,7 @@ class RegistrationViewModel : ViewModel() {
                         // Xử lý thành công
                     } else {
                         // Xử lý thất bại
-                        callback.onFailure("Register fail")
+                        callback.onFailure("Register failed")
                     }
                 }
 

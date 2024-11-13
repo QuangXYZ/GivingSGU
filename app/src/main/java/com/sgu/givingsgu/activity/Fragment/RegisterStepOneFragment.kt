@@ -5,56 +5,59 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.replace
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.sgu.givingsgu.R
+import com.sgu.givingsgu.activity.RegistrationActivity
+import com.sgu.givingsgu.databinding.FragmentRegisterStepOneBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterStepOneFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegisterStepOneFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentRegisterStepOneBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register_step_one, container, false)
+        _binding = FragmentRegisterStepOneBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterStep1Fragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegisterStepOneFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.submitBtn.setOnClickListener {
+            val name = binding.name.text.toString()
+            val email = binding.password.text.toString()
+
+            if (name.isEmpty() || email.isEmpty()) {
+                Toast.makeText(context, "Email and Password cannot be empty", Toast.LENGTH_SHORT).show()
+            } else if (binding.checkbox.isChecked == false) {
+                Toast.makeText(context, "Please check the box", Toast.LENGTH_SHORT).show()
+            } else {
+                val bundle = Bundle().apply {
+                    putString("name", name)
+                    putString("email", email)
                 }
+
+                val stepTwoFragment = RegisterStepTwoFragment().apply {
+                    arguments = bundle
+                }
+
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.content_frame, stepTwoFragment)
+                    .addToBackStack(null)
+                    .commit()
+                (activity as RegistrationActivity).findViewById<LinearProgressIndicator>(R.id.progressIndicator).progress = 100
+                (activity as RegistrationActivity).findViewById<TextView>(R.id.textView).setText("STEP 2 OF 2")
             }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

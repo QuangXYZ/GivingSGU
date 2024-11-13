@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
-        android:text="Name"
+        android:text="Guest"
         android:textColor="@color/text_color"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -61,23 +61,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Classic member"
+        android:text="Classic Member"
         android:textColor="@color/text_color"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
-    <ImageView
-        android:id="@+id/setting"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/setting"
-
-        app:layout_constraintBottom_toBottomOf="@id/avatar"
-        app:layout_constraintEnd_toStartOf="@id/message"
-        app:layout_constraintTop_toTopOf="@+id/avatar" />
 
     <ImageView
         android:id="@+id/message"
@@ -129,7 +119,7 @@
                             android:id="@+id/imageView14"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/order"
+                            android:src="@drawable/university"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -139,7 +129,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:text="Order List"
+                            android:text="University Information"
                             android:textColor="@color/text_color"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -183,17 +173,27 @@
                             android:paddingEnd="12dp"
                             android:paddingBottom="16dp">
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/transaction" />
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
-                                android:text="Transaction"
+                                android:text="StudentID"
+                                android:textColor="@color/darkGrey"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/graduate" />
+
+                            <TextView
+                                android:id="@+id/studentid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:text=""
                                 android:textColor="@color/darkGrey"
                                 android:textSize="14sp" />
 
@@ -210,19 +210,30 @@
                             android:paddingEnd="12dp"
                             android:paddingBottom="16dp">
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/edit" />
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
-                                android:text="Ongoing"
+                                android:text="Faculty"
                                 android:textColor="@color/darkGrey"
                                 android:textSize="14sp" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/graduationcap" />
+
+                            <TextView
+                                android:id="@+id/faculty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:text=""
+                                android:textColor="@color/darkGrey"
+                                android:textSize="14sp"
+                                android:gravity="center" />
 
                         </LinearLayout>
 
@@ -238,17 +249,27 @@
                             android:paddingEnd="12dp"
                             android:paddingBottom="16dp">
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/rate" />
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
-                                android:text="Give a rate"
+                                android:text="Points"
+                                android:textColor="@color/darkGrey"
+                                android:textSize="14sp" />
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/trophy" />
+
+                            <TextView
+                                android:id="@+id/points"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="4dp"
+                                android:paddingBottom="4dp"
+                                android:text=""
                                 android:textColor="@color/darkGrey"
                                 android:textSize="14sp" />
 
@@ -279,32 +300,45 @@
 
                     <ImageView
                         android:id="@+id/imageView16"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/edit_orange"
+                        android:src="@drawable/idcard"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView21"
+                        android:id="@+id/imageView164"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Edit Profile"
+                        android:text="Full Name:"
+                        android:textStyle="bold"
+
                         android:textColor="@color/text_color"
                         android:textSize="16sp"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="@id/imageView16"
                         app:layout_constraintStart_toEndOf="@+id/imageView16"
                         app:layout_constraintTop_toTopOf="@id/imageView16" />
+
+
+                    <TextView
+                        android:id="@+id/fullname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imageView164"
+                        app:layout_constraintStart_toEndOf="@+id/imageView164"
+                        app:layout_constraintTop_toTopOf="@id/imageView164" />
 
                     <ImageView
                         android:id="@+id/imageView15"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/arrow_left"
+                        android:src="@drawable/reload"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -340,20 +374,20 @@
                     <ImageView
                         android:id="@+id/imageView17"
 
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/discount"
+                        android:src="@drawable/mailcard"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView22"
+                        android:id="@+id/imageView170"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="My Discount"
+                        android:text="Email: "
                         android:textColor="@color/text_color"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -361,11 +395,22 @@
                         app:layout_constraintStart_toEndOf="@+id/imageView17"
                         app:layout_constraintTop_toTopOf="@id/imageView17" />
 
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imageView170"
+                        app:layout_constraintStart_toEndOf="@+id/imageView170"
+                        app:layout_constraintTop_toTopOf="@id/imageView170" />
+
                     <ImageView
                         android:id="@+id/imageView19"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/arrow_left"
+                        android:src="@drawable/reload"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -401,20 +446,20 @@
                     <ImageView
                         android:id="@+id/imageView28"
 
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_marginStart="4dp"
-                        android:src="@drawable/address"
+                        android:src="@drawable/phonebook"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView28"
+                        android:id="@+id/imageView280"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="My Address"
+                        android:text="Phone: "
                         android:textColor="@color/text_color"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -422,11 +467,22 @@
                         app:layout_constraintStart_toEndOf="@+id/imageView28"
                         app:layout_constraintTop_toTopOf="@id/imageView28" />
 
+                    <TextView
+                        android:id="@+id/phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="@id/imageView280"
+                        app:layout_constraintStart_toEndOf="@+id/imageView280"
+                        app:layout_constraintTop_toTopOf="@id/imageView280" />
+
                     <ImageView
                         android:id="@+id/imageView29"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/previous"
+                        android:src="@drawable/reload"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -496,7 +552,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 app:dividerColor="@color/lightGrey"
-
                 />
 
             <LinearLayout
@@ -505,7 +560,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
-
                 android:padding="12dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -514,13 +568,12 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-
                     <TextView
-                        android:id="@+id/textView26"
+                        android:id="@+id/btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Log out"
+                        android:text="Log In"
                         android:textColor="@color/text_color"
                         android:textSize="16sp"
                         android:textStyle="bold"

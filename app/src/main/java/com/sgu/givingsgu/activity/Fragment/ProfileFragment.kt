@@ -10,8 +10,10 @@ import android.widget.Toast
 import com.sgu.givingsgu.activity.LoginActivity
 import com.sgu.givingsgu.activity.MainActivity
 import com.sgu.givingsgu.databinding.FragmentProfileBinding
+import com.sgu.givingsgu.model.User
 import com.sgu.givingsgu.utils.DataLocalManager
-import com.sgu.givingsgu.utils.TokenUtils
+
+
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
@@ -20,7 +22,6 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -36,21 +37,28 @@ class ProfileFragment : Fragment() {
     }
 
     fun init() {
-        // Retrieve user and display data
-        val token = DataLocalManager.getToken()
-        if (token != null) {
-            val sub = TokenUtils.getClaimFromToken(token, "sub")
-            binding.name.text = sub
-            println("User sub: $sub")
-            Toast.makeText(requireContext(), "Welcome back $sub", Toast.LENGTH_SHORT).show()
-            // You can use the user data for further processing here
+        val user: User? = DataLocalManager.getUser()
+        if (user != null) {
+            binding.name.text = user.username
+            binding.btn.text = "Log out"
+            binding.studentid.text = user.studentId
+            binding.faculty.text = when (user.facultyId.toInt()) {
+                1 -> "Information Technology"
+                2 -> "Education"
+                3 -> "Banking"
+                4 -> "Tourism and Tour Guiding"
+                else -> "Other Faculty"
+            }
+            binding.points.text = user.points.toString()
+            binding.email.text = user.email
+            binding.phone.text = user.phoneNumber
+            binding.fullname.text = user.fullName
+            Toast.makeText(requireContext(), "Welcome back ${user.username}", Toast.LENGTH_SHORT).show()
         } else {
-            binding.name.text = "Guest"
-            binding.textView26.text = "Log in"
-            println("token is null")
             Toast.makeText(requireContext(), "Welcome Guess", Toast.LENGTH_SHORT).show()
         }
     }
+
     fun settingUpListener() {
         binding.logout.setOnClickListener(View.OnClickListener {
             if(DataLocalManager.getToken() != null) {
