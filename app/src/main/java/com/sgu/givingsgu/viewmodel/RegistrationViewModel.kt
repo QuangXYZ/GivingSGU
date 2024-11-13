@@ -16,7 +16,7 @@ class RegistrationViewModel : ViewModel() {
     private val authRepository = AuthRepository()
 
     fun registerUser(email : String, password : String, phone : String, fullName : String, studentid : String, faculty: Int ,callback: AuthCallback) {
-        val user = RegisterRequest(username = email, password = password, email = email, phoneNumber = phone, facultyId = faculty, fullName = fullName, studentId = studentid, role = "USER", imageUrl = "", points = 0)
+        val user = RegisterRequest(username = email, password = password, email = email, phoneNumber = phone, facultyId = faculty, fullName = fullName, studentId = studentid, role = "USER", imageUrl = "", points = 100)
         viewModelScope.launch {
             authRepository.registerUser(user).enqueue(object : Callback<ResponseWrapper<User>> {
                 override fun onResponse(

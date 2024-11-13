@@ -1,7 +1,6 @@
 package com.sgu.givingsgu.activity.Fragment
 
-import android.app.Activity
-import android.content.Intent
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.sgu.givingsgu.R
-import com.sgu.givingsgu.activity.MainActivity
 import com.sgu.givingsgu.databinding.FragmentRegisterStepTwoBinding
 import com.sgu.givingsgu.viewmodel.RegistrationViewModel
 
@@ -43,7 +40,7 @@ class RegisterStepTwoFragment : Fragment() {
             val fullname = binding.name.text.toString().trim()
             val studentid = binding.password.text.toString().trim()
             val selectedFaculty = binding.faculty.text.toString()
-            val faculty = faculties.indexOf(selectedFaculty)
+            val faculty = faculties.indexOf(selectedFaculty) + 1
             val phone = binding.phone.text.toString().trim()
 
             if (fullname.isNotEmpty() && studentid.isNotEmpty() && faculty!= -1 && phone.isNotEmpty()) {

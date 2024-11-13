@@ -20,6 +20,6 @@ data class User(
         facultyId: Long,
         fullName: String,
         studentId: String,
-    ) : this(0, username, password, email, phoneNumber, facultyId, fullName, studentId, "USER", 0)
+    ) : this(0, username, password, email, phoneNumber, facultyId, fullName, studentId, "USER", 100)
 
 }
