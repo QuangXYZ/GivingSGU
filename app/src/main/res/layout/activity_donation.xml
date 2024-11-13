@@ -62,7 +62,7 @@
         android:layout_marginTop="16dp"
         android:text="Thông tin ủng hộ"
         android:textColor="@color/text_color"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image" />
@@ -351,7 +351,7 @@
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:src="@drawable/momo_square_pinkbg"
+                        android:src="@drawable/zalo_pay_logo"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -359,7 +359,7 @@
                         android:textColor="@color/text_color"
                         android:textStyle="bold"
                         android:layout_marginStart="12dp"
-                        android:text="Ví momo"
+                        android:text="Ví Zalo Pay"
                         android:textSize="14sp"
                         />
                 </LinearLayout>
