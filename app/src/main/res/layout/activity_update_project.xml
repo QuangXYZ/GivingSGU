@@ -201,14 +201,30 @@
                     android:hint="Số tiền mục tiêu"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Spinner chọn trạng thái -->
-            <Spinner
-                android:id="@+id/project_status"
-                android:paddingTop="10dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/status_options" />
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:background="@drawable/text_input_bg">
 
+                <Spinner
+                    android:id="@+id/project_status"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:entries="@array/status_options" />
+            </LinearLayout>
+        </LinearLayout>
 
             <!-- TextInputEditText nhập mô tả dự án -->
             <com.google.android.material.textfield.TextInputLayout
