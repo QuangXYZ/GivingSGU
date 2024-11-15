@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,6 +43,7 @@ class UpdateProjectActivity : AppCompatActivity() {
         binding = ActivityUpdateProjectBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+        setupSpinner()
         displayProjectData()
         settingUpListener()
     }
@@ -52,6 +55,31 @@ class UpdateProjectActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra("project")!!
         }
+    }
+
+    private fun setupSpinner() {
+        val adapter = object : ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item,
+            resources.getStringArray(R.array.status_options)
+        ) {
+            override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
+                val view = super.getView(position, convertView, parent)
+                (view as TextView).setTextColor(ContextCompat.getColor(context, R.color.black)) // Thiết lập màu chữ đen cho mục đã chọn
+                return view
+            }
+
+            override fun getDropDownView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup): android.view.View {
+                val view = super.getDropDownView(position, convertView, parent)
+//                (view as TextView).setTextColor(ContextCompat.getColor(context, R.color.white)) // Thiết lập màu chữ đen cho mục trong dropdown
+                return view
+            }
+        }
+
+        // Thiết lập dropdown layout cho spinner
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.projectStatus.adapter = adapter
+        binding.projectStatus.setSelection(getStatusIndex(project.status))
     }
 
     private fun displayProjectData() {
