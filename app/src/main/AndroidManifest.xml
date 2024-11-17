@@ -45,6 +45,12 @@
             android:name=".activity.LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.AdminProjectDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.UpdateProjectActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.DonationActivity"
             android:exported="true"
             android:launchMode="singleTask">

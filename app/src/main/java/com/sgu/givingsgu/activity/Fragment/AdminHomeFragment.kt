@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.appbar.AppBarLayout
 import com.sgu.givingsgu.R
 import com.sgu.givingsgu.adapter.AdminProjectAdapter
 import com.sgu.givingsgu.adapter.AdminProjectHighLightAdapter
@@ -36,7 +37,7 @@ class AdminHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-//        settingUpListener()
+        settingUpListener()
     }
 
     fun init() {
@@ -74,5 +75,33 @@ class AdminHomeFragment : Fragment() {
             binding.projectHighLightProgressBar.visibility = View.GONE
         })
         viewModel.fetchAllProject()
+    }
+
+    fun settingUpListener() {
+
+        binding.appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
+            // Kiểm tra xem AppBarLayout có đang mở hoàn toàn không
+            binding.swipeRefreshLayout.isEnabled = verticalOffset == 0
+        })
+
+        // Setup swipe to refresh listener
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.projectProgressBar.visibility = View.VISIBLE
+            binding.projectHighLightProgressBar.visibility = View.VISIBLE
+
+            binding.adminProjectRecyclerView.visibility = View.GONE
+            binding.adminProjectHighLightRecyclerView.visibility = View.GONE
+
+            binding.swipeRefreshLayout.isRefreshing = true
+            viewModel.fetchAllProject()
+
+            binding.swipeRefreshLayout.postDelayed({
+                binding.swipeRefreshLayout.isRefreshing = false
+                binding.projectProgressBar.visibility = View.GONE
+                binding.projectHighLightProgressBar.visibility = View.GONE
+                binding.adminProjectRecyclerView.visibility = View.VISIBLE
+                binding.adminProjectHighLightRecyclerView.visibility = View.VISIBLE
+            }, 3000)
+        }
     }
 }

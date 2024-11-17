@@ -5,8 +5,10 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.sgu.givingsgu.activity.AdminProjectDetailActivity
 import com.sgu.givingsgu.activity.ProjectDetailActivity
-import com.sgu.givingsgu.databinding.AdminSingleProjectLayoutBinding
+import com.sgu.givingsgu.databinding.AdminSingleProjectHorizontalLayoutBinding
 import com.sgu.givingsgu.model.Project
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -20,7 +22,7 @@ class AdminProjectHighLightAdapter(val projects: MutableList<Project>) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
         val binding =
-            AdminSingleProjectLayoutBinding.inflate(
+            AdminSingleProjectHorizontalLayoutBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -29,22 +31,30 @@ class AdminProjectHighLightAdapter(val projects: MutableList<Project>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.adminTitle.text = projects[position].name
-        holder.binding.adminDonateAmount.text = projects[position].currentAmount.toString() + " VND"
+        holder.binding.title.text = projects[position].name
+        holder.binding.donateAmount.text = projects[position].currentAmount.toString() + " VND"
         val percent = (projects[position].currentAmount?.div(projects[position].targetAmount)
             ?.times(100))
             ?.toInt()
-        holder.binding.adminDonatePercent.text = percent.toString() + "%"
-        holder.binding.adminLinearProgressIndicator.progress = percent!!
+        holder.binding.donatePercent.text = percent.toString() + "%"
+        holder.binding.linearProgressIndicator.progress = percent!!
 
-        holder.binding.adminDonateNumber.text =
+        if (projects[position].imageUrls != null) {
+            if (projects[position].imageUrls?.split(",")?.toTypedArray()?.get(0) != null) {
+                val img = projects[position].imageUrls?.split(",")?.toTypedArray()
+                Glide.with(context).load(img?.get(0)).into(holder.binding.imageView2)
+            }
+
+        }
+
+        holder.binding.donateNumber.text =
             projects[position].numberDonors.toString() + " người đã ủng hộ"
         holder.binding.projectTime.text =
             formatTimeDifference(projects[position].startDate!!).toString()
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, ProjectDetailActivity::class.java)
-//            intent.putExtra("object", projects[position])
+            val intent = Intent(holder.itemView.context, AdminProjectDetailActivity::class.java)
+            intent.putExtra("project", projects[position])
             holder.itemView.context.startActivity(intent)
         }
     }
@@ -52,7 +62,7 @@ class AdminProjectHighLightAdapter(val projects: MutableList<Project>) :
 
     override fun getItemCount(): Int = projects.size
 
-    class ViewHolder(val binding: AdminSingleProjectLayoutBinding) :
+    class ViewHolder(val binding: AdminSingleProjectHorizontalLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
     }
