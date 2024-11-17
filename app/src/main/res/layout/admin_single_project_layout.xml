@@ -96,6 +96,7 @@
             app:layout_constraintTop_toBottomOf="@+id/admin_constraintLayout">
 
             <ImageView
+                android:id="@+id/projectImg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -318,17 +319,30 @@
                 android:elevation="1dp"
                 android:paddingStart="12dp"
                 android:stateListAnimator="@animator/scale"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/likeCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:padding="8dp"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/admin_homeLikeBtn"
+                app:layout_constraintStart_toEndOf="@+id/admin_homeLikeBtn"
+                app:layout_constraintTop_toTopOf="@+id/admin_homeLikeBtn" />
 
             <ImageView
                 android:id="@+id/admin_imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="8dp"
                 android:src="@drawable/comment"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/admin_homeLikeBtn"
+                app:layout_constraintStart_toEndOf="@+id/likeCount"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView

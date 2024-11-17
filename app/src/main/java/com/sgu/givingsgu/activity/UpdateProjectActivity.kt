@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.quang.lilyshop.activity.BaseActivity
 import com.sgu.givingsgu.R
 import com.sgu.givingsgu.adapter.ImagePreviewAdapter
 import com.sgu.givingsgu.databinding.ActivityUpdateProjectBinding
@@ -31,7 +32,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class UpdateProjectActivity : AppCompatActivity() {
+class UpdateProjectActivity : BaseActivity() {
     private lateinit var binding: ActivityUpdateProjectBinding
     private lateinit var project: Project
     private lateinit var imagePreviewAdapter: ImagePreviewAdapter

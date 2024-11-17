@@ -9,20 +9,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.quang.lilyshop.activity.BaseActivity
 import com.sgu.givingsgu.adapter.CommentAdapter
 import com.sgu.givingsgu.adapter.DonorAdapter
+import com.sgu.givingsgu.adapter.ImageAdapter
 import com.sgu.givingsgu.databinding.ActivityAdminProjectDetailBinding
 import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.viewmodel.ProjectDetailViewModel
 import java.util.Date
 import java.util.concurrent.TimeUnit
 
-class AdminProjectDetailActivity : AppCompatActivity() {
+class AdminProjectDetailActivity : BaseActivity() {
     private lateinit var binding: ActivityAdminProjectDetailBinding
     private lateinit var  commentAdapter: CommentAdapter
     private lateinit var donorAdapter: DonorAdapter
     private lateinit var project: Project
     private lateinit var viewModel: ProjectDetailViewModel
+    private lateinit var images: List<String>
+    private lateinit var imageAdapter: ImageAdapter
 
     var isExpanded: Boolean = false
 
@@ -44,9 +48,6 @@ class AdminProjectDetailActivity : AppCompatActivity() {
         } else {
             intent.getParcelableExtra("project")!!
         }
-
-        initComment()
-        initTopDonor()
 
         binding.adminProjectName.text = project.name
         binding.adminProjectDescription.text = project.description
@@ -76,6 +77,10 @@ class AdminProjectDetailActivity : AppCompatActivity() {
                 binding.adminProjectDescription.setEllipsize(TextUtils.TruncateAt.END)
             }
         })
+
+        initComment()
+        initTopDonor()
+        initImage()
     }
     fun settingUpListener() {
         binding.adminBackBtn.setOnClickListener {
@@ -123,6 +128,15 @@ class AdminProjectDetailActivity : AppCompatActivity() {
         project?.projectId?.let { viewModel.fetchTopDonors(it) }
     }
 
+    private fun initImage() {
+        images = project.imageUrls?.split(",") ?: listOf("https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg","https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg","https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg")
+
+        imageAdapter = ImageAdapter(images)
+
+        binding.imageRecyclerView.adapter = imageAdapter
+        binding.imageRecyclerView.isNestedScrollingEnabled = true
+        binding.imageRecyclerView.layoutManager =   LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    }
 
     fun calculateTimeRemaining(endDate: Date): String {
         val currentDate = Date()
