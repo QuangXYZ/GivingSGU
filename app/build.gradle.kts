@@ -84,7 +84,7 @@ dependencies {
     implementation("com.github.stfalcon-studio:StfalconImageViewer:v1.0.1")
     implementation("androidx.activity:activity-ktx:1.2.3")
     implementation("commons-codec:commons-codec:1.17.1")
-    implementation ("com.vipulasri:ticketview:1.1.2")
+    implementation ("com.github.gabriel-TheCode:AestheticDialogs:1.3.8")
 
 
 
