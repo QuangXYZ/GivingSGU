@@ -19,6 +19,8 @@
     <color name="darkGrey">#616161</color>
     <color name="Green">#72ad35</color>
     <color name="backgroundWhite">#fcfcfc</color>
+    <color name="transparent_white">#CCFFFFFF</color>
+
 
     <color name="orange_100">#E8A694</color>
     <color name="teal_100">#3DEDE1</color>
