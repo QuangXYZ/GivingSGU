@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
@@ -11,8 +11,8 @@
         android:maxSdkVersion="32" />
 
     <application
-        android:allowBackup="true"
         android:name=".utils.MyApp"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -21,14 +21,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GivingSGU"
         tools:replace="theme"
+        tools:targetApi="31" >
 
-
-        tools:targetApi="31">
- <!-- <activity -->
+        <activity
+            android:name=".activity.RewardDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RewardHistory"
+            android:exported="false" /> <!-- <activity -->
         <!-- android:name=".adapter.ImageMainActivity" -->
         <!-- android:exported="false" /> -->
         <activity
-            android:name=".activity.RedeemActivity"
+            android:name=".activity.RewardActivity"
             android:exported="false" />
         <activity
             android:name=".activity.SuccessActivity"
@@ -45,9 +49,15 @@
             android:name=".activity.LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.AdminProjectDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.UpdateProjectActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.DonationActivity"
             android:exported="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -67,7 +77,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.SplashScreenActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

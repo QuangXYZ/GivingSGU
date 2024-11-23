@@ -11,13 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.quang.lilyshop.activity.BaseActivity
 import com.sgu.givingsgu.R
 import com.sgu.givingsgu.activity.Fragment.AdminHomeFragment
 import com.sgu.givingsgu.activity.Fragment.AdminProfileFragment
 import com.sgu.givingsgu.activity.Fragment.CreateFragment
 import com.sgu.givingsgu.databinding.AdminActivityMainBinding
 
-class AdminMainActivity : AppCompatActivity() {
+class AdminMainActivity : BaseActivity() {
     private lateinit var binding: AdminActivityMainBinding
     private lateinit var adminHomeFragment: AdminHomeFragment
     private lateinit var createFragment: CreateFragment
@@ -73,29 +74,54 @@ class AdminMainActivity : AppCompatActivity() {
         }
     }
 
+//    private fun switchFragment(fragment: Fragment, curPos: Int, newPos: Int) {
+//        if (fragment != activeFragment) {
+//            lateinit var curAnim: Animation
+//            lateinit var newAnim: Animation
+//            if (newPos > curPos) {
+//                curAnim =
+//                    AnimationUtils.loadAnimation(applicationContext, R.anim.anim_slide_in_left)
+//                newAnim =
+//                    AnimationUtils.loadAnimation(applicationContext, R.anim.anim_slide_out_left)
+//            } else {
+//                curAnim =
+//                    AnimationUtils.loadAnimation(applicationContext, R.anim.anim_slide_in_right)
+//                newAnim =
+//                    AnimationUtils.loadAnimation(applicationContext, R.anim.anim_slide_out_right)
+//            }
+//            // Set animation for fragment entering and exiting
+//            fragment.view?.startAnimation(curAnim)
+//            activeFragment?.view?.startAnimation(newAnim)
+//            supportFragmentManager.beginTransaction().apply {
+//
+//                hide(activeFragment!!)
+//                show(fragment)
+//            }.commit()
+//            activeFragment = fragment
+//        }
+//    }
+
     private fun switchFragment(fragment: Fragment, curPos: Int, newPos: Int) {
         if (fragment != activeFragment) {
-            lateinit var curAnim: Animation
-            lateinit var newAnim: Animation
-            if (newPos > curPos) {
-                curAnim =
-                    AnimationUtils.loadAnimation(applicationContext, R.anim.anim_slide_in_left)
-                newAnim =
-                    AnimationUtils.loadAnimation(applicationContext, R.anim.anim_slide_out_left)
-            } else {
-                curAnim =
-                    AnimationUtils.loadAnimation(applicationContext, R.anim.anim_slide_in_right)
-                newAnim =
-                    AnimationUtils.loadAnimation(applicationContext, R.anim.anim_slide_out_right)
-            }
-            // Set animation for fragment entering and exiting
-            fragment.view?.startAnimation(curAnim)
-            activeFragment?.view?.startAnimation(newAnim)
-            supportFragmentManager.beginTransaction().apply {
+            val transaction = supportFragmentManager.beginTransaction()
 
-                hide(activeFragment!!)
-                show(fragment)
-            }.commit()
+            // Thêm hiệu ứng trượt cho chuyển đổi fragment
+            if (newPos > curPos) {
+                transaction.setCustomAnimations(
+                    R.anim.anim_slide_in_left,
+                    R.anim.anim_slide_out_left
+                )
+            } else {
+                transaction.setCustomAnimations(
+                    R.anim.anim_slide_in_right,
+                    R.anim.anim_slide_out_right
+                )
+            }
+
+            // Ẩn Fragment đang hiện tại và hiện Fragment mới
+            activeFragment?.let { transaction.hide(it) }
+            transaction.show(fragment).commitNowAllowingStateLoss()
+
             activeFragment = fragment
         }
     }
