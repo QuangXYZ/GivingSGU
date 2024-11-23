@@ -115,7 +115,7 @@
             android:padding="32dp">
 
             <TextView
-                android:id="@+id/textView27"
+                android:id="@+id/points"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -138,7 +138,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView27" />
+                app:layout_constraintTop_toBottomOf="@+id/points" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -197,6 +197,7 @@
         android:text="Redeem"
         android:textColor="@color/white"
         android:enabled="false"
+        android:layout_margin="16dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/imageView13"
         app:layout_constraintEnd_toEndOf="parent"

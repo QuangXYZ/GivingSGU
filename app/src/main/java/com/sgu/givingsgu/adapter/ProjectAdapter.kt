@@ -12,11 +12,13 @@ import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.network.response.ProjectResponse
 import com.sgu.givingsgu.repository.ProjectRepository
 import com.sgu.givingsgu.utils.DataLocalManager
+import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class ProjectAdapter(val projects: MutableList<ProjectResponse>) : RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
@@ -34,7 +36,15 @@ class ProjectAdapter(val projects: MutableList<ProjectResponse>) : RecyclerView.
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.title.text = projects[position].project.name
-        holder.binding.donateAmount.text = projects[position].project.currentAmount.toString()+ " VND"
+
+        val cleanString = projects[position].project.currentAmount.toString().replace("""[,.]""".toRegex(), "")
+
+        // Chuyển chuỗi về dạng số
+        val parsed = cleanString.toDoubleOrNull() ?: 0.0
+
+        // Định dạng số theo kiểu tiền tệ
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(parsed)
+        holder.binding.donateAmount.text = formatted+ " VND"
         val percent = (projects[position].project.currentAmount?.div(projects[position].project.targetAmount)
             ?.times(100))
             ?.toInt()

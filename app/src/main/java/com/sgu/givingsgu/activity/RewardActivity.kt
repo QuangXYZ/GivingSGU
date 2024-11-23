@@ -37,6 +37,7 @@ class RewardActivity : BaseActivity(), RewardAdapter.OnRewardClickListener {
         enableEdgeToEdge()
         viewModel = RewardViewModel()
         viewModel.fetchAllReward()
+        binding.points.text = DataLocalManager.getUser()?.points.toString() + " RP"
         viewModel.reward.observe(this) {
             binding.recyclerView.adapter = RewardAdapter(it.toMutableList(), this)
             binding.recyclerView.isNestedScrollingEnabled = true
@@ -70,7 +71,23 @@ class RewardActivity : BaseActivity(), RewardAdapter.OnRewardClickListener {
                 return@setOnClickListener
             }
 
-            viewModel.redeem(reward.id.toString(), DataLocalManager.getUser()?.userId.toString(), object :
+            if(DataLocalManager.getUser()!!.points < reward.pointsRequired) {
+                AestheticDialog.Builder(this, DialogStyle.FLAT, DialogType.ERROR)
+                    .setTitle("Error")
+                    .setMessage("Not enough point")
+                    .setCancelable(false)
+                    .setDarkMode(false)
+                    .setGravity(Gravity.CENTER)
+                    .setAnimation(DialogAnimation.SHRINK)
+                    .setOnClickListener(object : OnDialogClickListener {
+                        override fun onClick(dialog: AestheticDialog.Builder) {
+                            dialog.dismiss()
+                        }
+                    })
+                    .show()
+                return@setOnClickListener
+            }
+            viewModel.redeem( DataLocalManager.getUser()?.userId.toString(),reward.id.toString(), object :
                 RewardViewModel.RewardListener {
                 override fun onRewardSuccess(userReward: UserReward) {
 
@@ -84,12 +101,12 @@ class RewardActivity : BaseActivity(), RewardAdapter.OnRewardClickListener {
                         .setOnClickListener(object : OnDialogClickListener {
                             override fun onClick(dialog: AestheticDialog.Builder) {
                                 dialog.dismiss()
+                                animateTextView(DataLocalManager.getUser()!!.points, DataLocalManager.getUser()!!.points - reward.pointsRequired, binding.points)
                             }
                         })
                         .show()
 
 
-                    finish()
                 }
 
                 override fun onRewardFailed(message: String) {
@@ -124,7 +141,7 @@ class RewardActivity : BaseActivity(), RewardAdapter.OnRewardClickListener {
         val valueAnimator = ValueAnimator.ofInt(initialValue, finalValue)
         valueAnimator.setDuration(1500)
         valueAnimator.addUpdateListener { valueAnimator ->
-            textview.text = valueAnimator.animatedValue.toString()
+            textview.text = valueAnimator.animatedValue.toString() + " RP"
         }
         valueAnimator.start()
     }

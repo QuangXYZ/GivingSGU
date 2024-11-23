@@ -18,4 +18,9 @@ interface AuthService {
 
     @POST("/api/auth/register")
     fun registerUser(@Body user: RegisterRequest): Call<ResponseWrapper<User>>
+
+
+
+
+
 }

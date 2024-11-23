@@ -139,7 +139,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/rewardId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="123432"
@@ -163,7 +163,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/rewardDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10:37 - 9/11/2023"
@@ -187,7 +187,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/rewardStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ví Zalopay"

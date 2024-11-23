@@ -27,7 +27,7 @@
             android:name=".activity.RewardDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.RewardHistory"
+            android:name=".activity.RewardHistoryActivity"
             android:exported="false" /> <!-- <activity -->
         <!-- android:name=".adapter.ImageMainActivity" -->
         <!-- android:exported="false" /> -->

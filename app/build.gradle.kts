@@ -85,6 +85,8 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.2.3")
     implementation("commons-codec:commons-codec:1.17.1")
     implementation ("com.github.gabriel-TheCode:AestheticDialogs:1.3.8")
+    implementation("com.journeyapps:zxing-android-embedded:4.1.0")
+    implementation("com.google.zxing:core:3.3.3")
 
 
 

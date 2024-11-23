@@ -21,4 +21,8 @@ class RewardRepository {
     fun redeem(userId: String, rewardId: String): Call<ResponseWrapper<UserReward>> {
         return rewardApiService.redeem(userId, rewardId)
     }
+
+    fun getAllRewardHistory(userId: Long): Call<ResponseWrapper<List<UserReward>>> {
+        return rewardApiService.getAllUserReward(userId)
+    }
 }
