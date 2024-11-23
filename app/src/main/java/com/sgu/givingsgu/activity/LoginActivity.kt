@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.quang.lilyshop.activity.BaseActivity
 import com.sgu.givingsgu.activity.Fragment.ProfileFragment
 import com.sgu.givingsgu.databinding.ActivityLoginBinding
+import com.sgu.givingsgu.model.User
+import com.sgu.givingsgu.utils.DataLocalManager
 
 import com.sgu.givingsgu.viewmodel.LoginViewModel
 
@@ -49,9 +51,16 @@ class LoginActivity : BaseActivity() {
             if (username.isNotEmpty() && password.isNotEmpty()) {
                 viewModel.loginUser(username, password, object : LoginViewModel.AuthCallback {
                     override fun onSuccess() {
-                        Toast.makeText(this@LoginActivity, "Login success", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(intent)
+                        val user: User? = DataLocalManager.getUser()
+                        if (user != null && user.role == "admin") {
+                            Toast.makeText(this@LoginActivity, "Login Admin Success", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@LoginActivity, AdminMainActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(this@LoginActivity, "Login Success", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            startActivity(intent)
+                        }
                     }
 
                     override fun onFailure(message: String) {
