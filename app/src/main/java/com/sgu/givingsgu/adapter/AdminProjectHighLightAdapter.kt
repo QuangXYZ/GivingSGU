@@ -10,10 +10,12 @@ import com.sgu.givingsgu.activity.AdminProjectDetailActivity
 import com.sgu.givingsgu.activity.ProjectDetailActivity
 import com.sgu.givingsgu.databinding.AdminSingleProjectHorizontalLayoutBinding
 import com.sgu.givingsgu.model.Project
+import java.text.NumberFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.Date
+import java.util.Locale
 
 class AdminProjectHighLightAdapter(val projects: MutableList<Project>) :
     RecyclerView.Adapter<AdminProjectHighLightAdapter.ViewHolder>() {
@@ -32,7 +34,8 @@ class AdminProjectHighLightAdapter(val projects: MutableList<Project>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.title.text = projects[position].name
-        holder.binding.donateAmount.text = projects[position].currentAmount.toString() + " VND"
+//        holder.binding.donateAmount.text = projects[position].currentAmount.toString() + " VND"
+        holder.binding.donateAmount.text = formatCurrency(projects[position].currentAmount!!)
         val percent = (projects[position].currentAmount?.div(projects[position].targetAmount)
             ?.times(100))
             ?.toInt()
@@ -45,6 +48,16 @@ class AdminProjectHighLightAdapter(val projects: MutableList<Project>) :
                 Glide.with(context).load(img?.get(0)).into(holder.binding.imageView2)
             }
 
+        }
+
+        val startDateTime = LocalDateTime.now()
+        val endDateTime = projects[position].endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+        val daysRemaining = ChronoUnit.DAYS.between(startDateTime, endDateTime)
+
+        holder.binding.donateRemain.text = if (daysRemaining < 0) {
+            "Đã kết thúc"
+        } else {
+            "$daysRemaining ngày"
         }
 
         holder.binding.donateNumber.text =
@@ -84,6 +97,11 @@ class AdminProjectHighLightAdapter(val projects: MutableList<Project>) :
             hours > 0 -> "$hours giờ trước"
             else -> "Vừa mới"
         }
+    }
+
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
     }
 
 }

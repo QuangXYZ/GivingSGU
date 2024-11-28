@@ -16,7 +16,10 @@ import com.sgu.givingsgu.adapter.ImageAdapter
 import com.sgu.givingsgu.databinding.ActivityAdminProjectDetailBinding
 import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.viewmodel.ProjectDetailViewModel
+import java.text.NumberFormat
 import java.util.Date
+import java.util.Locale
+import com.sgu.givingsgu.R
 import java.util.concurrent.TimeUnit
 
 class AdminProjectDetailActivity : BaseActivity() {
@@ -52,29 +55,33 @@ class AdminProjectDetailActivity : BaseActivity() {
         binding.adminProjectName.text = project.name
         binding.adminProjectDescription.text = project.description
         if (project.imageUrls != null) {
-            if (project.imageUrls?.split(",")?.toTypedArray()?.get(0) != null) {
-                val img = project.imageUrls?.split(",")?.toTypedArray()
-                Glide.with(this).load(img?.get(0)).into(binding.adminProjectImg)
-            }
+//            if (project.imageUrls?.split(",")?.toTypedArray()?.get(0) != null) {
+//                val img = project.imageUrls?.split(",")?.toTypedArray()
+//                Glide.with(this).load(img?.get(0)).into(binding.adminProjectImg)
+//            }
+            images = project.imageUrls?.split(",")?.toList()!!
+
+            Glide.with(this).load(images[0]).into(binding.adminProjectImg)
         }
-        binding.adminProjectAmount.text = project.currentAmount.toString() + " VND"
+//        binding.adminProjectAmount.text = project.currentAmount.toString() + " VND"
+        binding.adminProjectAmount.text = project.currentAmount?.let { formatCurrency(it) }
         val percent = (project.currentAmount?.div(project.targetAmount)
             ?.times(100))
             ?.toInt()
         binding.adminProjectPercent.text = percent.toString() + "%"
         binding.adminProjectProgress.progress = percent!!
         binding.adminProjectTime.text = calculateTimeRemaining(project.endDate)
-        binding.adminProjectTarget.text = project.targetAmount.toString() + " VND"
-
+//        binding.adminProjectTarget.text = project.targetAmount.toString() + " VND"
+        binding.adminProjectTarget.text = formatCurrency(project.targetAmount)
 
 
         val fullText = project.description
-        binding.adminProjectDescription.setText(fullText)
+        binding.adminProjectDescription.text = fullText
         // Kiểm tra nếu nội dung quá dài thì mặc định chỉ hiển thị 3 dòng
         binding.adminProjectDescription.post(Runnable {
             if (binding.adminProjectDescription.getLineCount() > 4) {
                 binding.adminProjectDescription.setMaxLines(4)
-                binding.adminProjectDescription.setEllipsize(TextUtils.TruncateAt.END)
+                binding.adminProjectDescription.ellipsize = TextUtils.TruncateAt.END
             }
         })
 
@@ -120,7 +127,48 @@ class AdminProjectDetailActivity : BaseActivity() {
     }
     private fun initTopDonor() {
         viewModel.donation.observe(this, Observer {
-            donorAdapter = DonorAdapter(it.toMutableList())
+
+            if (it.size >= 1) {
+                if (it[0].imageUrl != null) {
+                    Glide.with(this)
+                        .load(it[0].imageUrl)
+                        .centerInside()
+                        .into(binding.firstUserImg)
+                } else {
+                    binding.firstUserImg.setImageResource(R.drawable.user_default)
+                }
+                binding.firstUserName.text = it[0].fullName
+                binding.firstUserAmount.text = formatCurrency(it[0].totalAmount)
+            }
+
+            if (it.size >= 2) {
+                if (it[1].imageUrl != null) {
+                    Glide.with(this)
+                        .load(it[1].imageUrl)
+                        .centerInside()
+                        .into(binding.secondUserImg)
+                } else {
+                    binding.secondUserImg.setImageResource(R.drawable.user_default)
+                }
+                binding.secondUserName.text = it[1].fullName
+                binding.secondUserAmount.text = formatCurrency(it[1].totalAmount)
+            }
+
+            if (it.size >= 3) {
+                if (it[2].imageUrl != null) {
+                    Glide.with(this)
+                        .load(it[2].imageUrl)
+                        .centerInside()
+                        .into(binding.thirdUserImg)
+                } else {
+                    binding.thirdUserImg.setImageResource(R.drawable.user_default)
+                }
+                binding.thirdUserName.text = it[2].fullName
+                binding.thirdUserAmount.text = formatCurrency(it[2].totalAmount)
+
+            }
+
+            donorAdapter = DonorAdapter(it.drop(3).toMutableList())
             binding.adminTopDonorRecyclerView.adapter = donorAdapter
             binding.adminTopDonorRecyclerView.isNestedScrollingEnabled = true
             binding.adminTopDonorRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -156,5 +204,10 @@ class AdminProjectDetailActivity : BaseActivity() {
                 "$diffInDays ngày, $diffInHours giờ"
             }
         }
+    }
+
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
     }
 }
