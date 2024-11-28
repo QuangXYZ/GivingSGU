@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,7 +13,7 @@
     <LinearLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:alpha="0"
         android:background="@color/white"
         android:gravity="center_vertical"
@@ -21,7 +22,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
     </LinearLayout>
 
@@ -295,8 +295,8 @@
 
                     <ImageView
                         android:id="@+id/imageView16"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginStart="4dp"
                         android:src="@drawable/idcard"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -369,8 +369,8 @@
                     <ImageView
                         android:id="@+id/imageView17"
 
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginStart="4dp"
                         android:src="@drawable/mailcard"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -441,8 +441,8 @@
                     <ImageView
                         android:id="@+id/imageView28"
 
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginStart="4dp"
                         android:src="@drawable/phonebook"
                         app:layout_constraintBottom_toBottomOf="parent"

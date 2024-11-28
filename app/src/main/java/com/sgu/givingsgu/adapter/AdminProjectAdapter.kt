@@ -13,10 +13,12 @@ import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.network.response.ProjectResponse
 import com.sgu.givingsgu.repository.ProjectRepository
 import com.sgu.givingsgu.utils.DataLocalManager
+import java.text.NumberFormat
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.Date
+import java.util.Locale
 
 class AdminProjectAdapter(val projects: MutableList<ProjectResponse>) :
     RecyclerView.Adapter<AdminProjectAdapter.ViewHolder>() {
@@ -38,7 +40,8 @@ class AdminProjectAdapter(val projects: MutableList<ProjectResponse>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.adminTitle.text = projects[position].project.name
-        holder.binding.adminDonateAmount.text = projects[position].project.currentAmount.toString() + " VND"
+//        holder.binding.adminDonateAmount.text = projects[position].project.currentAmount.toString() + " VND"
+        holder.binding.adminDonateAmount.text = formatCurrency(projects[position].project.currentAmount!!)
         val percent = (projects[position].project.currentAmount?.div(projects[position].project.targetAmount)
             ?.times(100))
             ?.toInt()
@@ -50,6 +53,16 @@ class AdminProjectAdapter(val projects: MutableList<ProjectResponse>) :
                 val img = projects[position].project.imageUrls?.split(",")?.toTypedArray()
                 Glide.with(context).load(img?.get(0)).into(holder.binding.projectImg)
             }
+        }
+
+        val startDateTime = LocalDateTime.now()
+        val endDateTime = projects[position].project.endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+        val daysRemaining = ChronoUnit.DAYS.between(startDateTime, endDateTime)
+
+        holder.binding.adminDonateRemain.text = if (daysRemaining < 0) {
+            "Đã kết thúc"
+        } else {
+            "$daysRemaining ngày"
         }
 
         holder.binding.adminDonateNumber.text =
@@ -110,6 +123,11 @@ class AdminProjectAdapter(val projects: MutableList<ProjectResponse>) :
             hours > 0 -> "$hours giờ trước"
             else -> "Vừa mới"
         }
+    }
+
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
     }
 
 }
