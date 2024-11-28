@@ -9,13 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.quang.lilyshop.activity.BaseActivity
+import com.sgu.givingsgu.R
 import com.sgu.givingsgu.adapter.CommentAdapter
 import com.sgu.givingsgu.adapter.DonorAdapter
 import com.sgu.givingsgu.adapter.ImageAdapter
 import com.sgu.givingsgu.databinding.ActivityProjectDetailBinding
 import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.viewmodel.ProjectDetailViewModel
+import java.text.NumberFormat
 import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 
@@ -62,16 +65,16 @@ class ProjectDetailActivity : BaseActivity() {
 
             Glide.with(this).load(images[0]).into(binding.projectImg)
         }
-        binding.projectAmount.text = project.currentAmount.toString() + " VND"
         val percent = (project.currentAmount?.div(project.targetAmount)
             ?.times(100))
             ?.toInt()
         binding.projectPercent.text = percent.toString() + "%"
         binding.projectProgress.progress = percent!!
         binding.projectTime.text = calculateTimeRemaining(project.endDate)
-        binding.projectTarget.text = project.targetAmount.toString() + " VND"
 
+        binding.projectTarget.text = formatCurrency(project.targetAmount)
 
+        binding.projectAmount.text = project.currentAmount?.let { formatCurrency(it) }
         val fullText = project.description
         binding.projectDescription.text = fullText
         // Kiểm tra nếu nội dung quá dài thì mặc định chỉ hiển thị 3 dòng
@@ -85,6 +88,8 @@ class ProjectDetailActivity : BaseActivity() {
         initComment()
         initTopDonor()
         initImage()
+
+
     }
 
     fun settingUpListener() {
@@ -112,6 +117,12 @@ class ProjectDetailActivity : BaseActivity() {
             intent.putExtra("project", project)
             startActivity(intent)
         }
+
+        binding.transactionHistory.setOnClickListener {
+            val intent = Intent(this, DonationHistoryActivity::class.java)
+            intent.putExtra("project", project)
+            startActivity(intent)
+        }
     }
 
     private fun initComment() {
@@ -126,7 +137,49 @@ class ProjectDetailActivity : BaseActivity() {
 
     private fun initTopDonor() {
         viewModel.donation.observe(this, Observer {
-            donorAdapter = DonorAdapter(it.toMutableList())
+
+            if (it.size >= 1) {
+                if (it[0].imageUrl != null) {
+                    Glide.with(this)
+                        .load(it[0].imageUrl)
+                        .centerInside()
+                        .into(binding.firstUserImg)
+                } else {
+                    binding.firstUserImg.setImageResource(R.drawable.user_default)
+                }
+                binding.firstUserName.text = it[0].fullName
+                binding.firstUserAmount.text = formatCurrency(it[0].totalAmount)
+            }
+
+            if (it.size >= 2) {
+                if (it[1].imageUrl != null) {
+                    Glide.with(this)
+                        .load(it[1].imageUrl)
+                        .centerInside()
+                        .into(binding.secondUserImg)
+                } else {
+                    binding.secondUserImg.setImageResource(R.drawable.user_default)
+                }
+                binding.secondUserName.text = it[1].fullName
+                binding.secondUserAmount.text = formatCurrency(it[1].totalAmount)
+            }
+
+            if (it.size >= 3) {
+                if (it[2].imageUrl != null) {
+                    Glide.with(this)
+                        .load(it[2].imageUrl)
+                        .centerInside()
+                        .into(binding.thirdUserImg)
+                } else {
+                    binding.thirdUserImg.setImageResource(R.drawable.user_default)
+                }
+                binding.thirdUserName.text = it[2].fullName
+                binding.thirdUserAmount.text = formatCurrency(it[2].totalAmount)
+
+            }
+
+
+            donorAdapter = DonorAdapter(it.drop(3).toMutableList())
             binding.topDonorRecyclerView.adapter = donorAdapter
             binding.topDonorRecyclerView.isNestedScrollingEnabled = true
             binding.topDonorRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -135,13 +188,18 @@ class ProjectDetailActivity : BaseActivity() {
     }
 
     private fun initImage() {
-        images = project.imageUrls?.split(",") ?: listOf("https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg","https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg","https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg")
+        images = project.imageUrls?.split(",") ?: listOf(
+            "https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg",
+            "https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg",
+            "https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg"
+        )
 
         imageAdapter = ImageAdapter(images)
 
         binding.imageRecyclerView.adapter = imageAdapter
         binding.imageRecyclerView.isNestedScrollingEnabled = true
-        binding.imageRecyclerView.layoutManager =   LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.imageRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     fun calculateTimeRemaining(endDate: Date): String {
@@ -164,6 +222,13 @@ class ProjectDetailActivity : BaseActivity() {
         }
     }
 
+
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
+    }
+
 }
+
 
 

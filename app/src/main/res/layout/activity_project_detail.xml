@@ -281,19 +281,26 @@
                                 android:orientation="vertical"
                                 android:gravity="center">
                                 <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/secondUserImg"
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
                                     android:src="@drawable/user_default"/>
                                 <TextView
+                                    android:id="@+id/secondUserName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:text="Nguyen Van A"
+
                                     android:textSize="12dp"
                                     android:textColor="@color/text_color"
                                     android:textStyle="bold"
                                     android:layout_marginTop="4dp"
                                     />
                                 <TextView
+                                    android:id="@+id/secondUserAmount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="200.000 vnd"
@@ -310,19 +317,25 @@
                                 android:orientation="vertical"
                                 android:gravity="center">
                                 <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/firstUserImg"
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
                                     android:src="@drawable/user_default"/>
                                 <TextView
+                                    android:id="@+id/firstUserName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Nguyen Van A"
                                     android:textSize="12dp"
+                                    android:singleLine="true"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:textColor="@color/text_color"
                                     android:textStyle="bold"
                                     android:layout_marginTop="4dp"
                                     />
                                 <TextView
+                                    android:id="@+id/firstUserAmount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="200.000 vnd"
@@ -341,19 +354,25 @@
                                 android:orientation="vertical"
                                 android:gravity="center">
                                 <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/thirdUserImg"
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
                                     android:src="@drawable/user_default"/>
                                 <TextView
+                                    android:id="@+id/thirdUserName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Nguyen Van A"
+                                    android:singleLine="true"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"
                                     android:textSize="12dp"
                                     android:textColor="@color/text_color"
                                     android:textStyle="bold"
                                     android:layout_marginTop="4dp"
                                     />
                                 <TextView
+                                    android:id="@+id/thirdUserAmount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="200.000 vnd"
@@ -380,15 +399,62 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"/>
                     </LinearLayout>
-                    
-                    <TextView
-                        android:layout_width="wrap_content"
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/transactionHistory"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Cảm nghĩ"
                         android:layout_marginTop="12dp"
-                        android:textColor="@color/dart_blue"
-                        android:textSize="14sp"
-                        android:textStyle="bold"/>
+                        android:padding="4dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Danh sách quyên góp"
+                            android:textColor="@color/dart_blue"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/arrow_left"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/commentSection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:padding="4dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cảm nghĩ về dự án"
+                            android:textColor="@color/dart_blue"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/arrow_left"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/commentRecyclerView"
                         android:layout_width="match_parent"
@@ -418,8 +484,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        app:strokeWidth="0dp"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/white">
+        android:backgroundTint="@android:color/transparent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

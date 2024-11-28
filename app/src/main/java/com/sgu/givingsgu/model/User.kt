@@ -10,7 +10,7 @@ data class User(
     val fullName: String,
     val studentId: String,
     val role: String,
-    val points: Int
+    var points: Int
 ) {
     constructor(
         username: String,

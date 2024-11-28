@@ -10,11 +10,13 @@ import com.sgu.givingsgu.activity.ProjectDetailActivity
 import com.sgu.givingsgu.databinding.SingleProjectHorizontalLayoutBinding
 import com.sgu.givingsgu.databinding.SingleProjectLayoutBinding
 import com.sgu.givingsgu.model.Project
+import java.text.NumberFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class ProjectHighLightAdapter(val projects: MutableList<Project>) : RecyclerView.Adapter<ProjectHighLightAdapter.ViewHolder>() {
@@ -29,7 +31,10 @@ class ProjectHighLightAdapter(val projects: MutableList<Project>) : RecyclerView
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.title.text = projects[position].name
-        holder.binding.donateAmount.text = projects[position].currentAmount.toString()+ " VND"
+
+
+
+        holder.binding.donateAmount.text = formatCurrency(projects[position].currentAmount!!)
         val percent = (projects[position].currentAmount?.div(projects[position].targetAmount)
             ?.times(100))
             ?.toInt()
@@ -42,6 +47,17 @@ class ProjectHighLightAdapter(val projects: MutableList<Project>) : RecyclerView
             }
 
         }
+        val startDateTime = LocalDateTime.now()
+        val endDateTime = projects[position].endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+        val daysRemaining = ChronoUnit.DAYS.between(startDateTime, endDateTime)
+
+        holder.binding.donateRemain.text = if (daysRemaining < 0) {
+            "Đã kết thúc"
+        } else {
+            "$daysRemaining ngày"
+        }
+
+
 
         holder.binding.donateNumber.text = projects[position].numberDonors.toString()+" người đã ủng hộ"
         holder.binding.projectTime.text = formatTimeDifference(projects[position].startDate!!).toString()
@@ -80,6 +96,10 @@ class ProjectHighLightAdapter(val projects: MutableList<Project>) : RecyclerView
         }
     }
 
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
+    }
 }
 
 

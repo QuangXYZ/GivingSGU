@@ -10,6 +10,7 @@ import com.sgu.givingsgu.network.response.ProjectResponse
 import com.sgu.givingsgu.network.response.ResponseWrapper
 import com.sgu.givingsgu.repository.ProjectRepository
 import com.sgu.givingsgu.repository.RewardRepository
+import com.sgu.givingsgu.utils.DataLocalManager
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -57,6 +58,11 @@ class RewardViewModel : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         listener.onRewardSuccess(response.body()?.data!!)
+                        DataLocalManager.getUser()?.let { user ->
+                            user.points -= response.body()?.data?.reward?.pointsRequired ?: 0
+                            DataLocalManager.saveUser(user)
+                        }
+
                     } else {
                         listener.onRewardFailed(response.message())
                         _error.value = response.message()

@@ -6,9 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sgu.givingsgu.R
 import com.sgu.givingsgu.activity.RewardActivity
-import com.sgu.givingsgu.activity.RewardHistory
+import com.sgu.givingsgu.activity.RewardHistoryActivity
 import com.sgu.givingsgu.databinding.FragmentRedeemBinding
 
 class RedeemFragment : Fragment() {
@@ -38,7 +37,7 @@ class RedeemFragment : Fragment() {
 
         }
         binding.history.setOnClickListener {
-            val intent = Intent(requireContext(), RewardHistory::class.java)
+            val intent = Intent(requireContext(), RewardHistoryActivity::class.java)
             startActivity(intent)
         }
 

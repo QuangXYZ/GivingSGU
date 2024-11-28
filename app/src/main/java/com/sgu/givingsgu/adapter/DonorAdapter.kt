@@ -11,6 +11,8 @@ import com.sgu.givingsgu.databinding.SingleCommentLayoutBinding
 import com.sgu.givingsgu.databinding.SingleDonorLayoutBinding
 import com.sgu.givingsgu.network.response.CommentResponse
 import com.sgu.givingsgu.network.response.DonationResponse
+import java.text.NumberFormat
+import java.util.Locale
 
 class DonorAdapter (val donations: MutableList<DonationResponse>) :
     RecyclerView.Adapter<DonorAdapter.ViewHolder>() {
@@ -26,7 +28,10 @@ class DonorAdapter (val donations: MutableList<DonationResponse>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.donorName.text = donations[position].fullName
         holder.binding.donorDate.text = donations[position].totalAmount.toString()
-        holder.binding.donationAmount.text = donations[position].totalAmount.toString()
+
+
+
+        holder.binding.donationAmount.text = formatCurrency(donations[position].totalAmount)
 
         if (position%2==0) {
             holder.binding.materialCardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.orange_100))
@@ -52,6 +57,11 @@ class DonorAdapter (val donations: MutableList<DonationResponse>) :
     class ViewHolder(val binding: SingleDonorLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+    }
+
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
     }
 
 
