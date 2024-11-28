@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import com.sgu.givingsgu.activity.RewardActivity
 import com.sgu.givingsgu.activity.RewardHistoryActivity
 import com.sgu.givingsgu.databinding.FragmentRedeemBinding
+import com.sgu.givingsgu.utils.DataLocalManager
+import java.text.NumberFormat
+import java.util.Locale
 
 class RedeemFragment : Fragment() {
     private lateinit var binding: FragmentRedeemBinding
@@ -28,6 +31,15 @@ class RedeemFragment : Fragment() {
     }
     private fun init() {
         settingUpListener()
+
+        if (DataLocalManager.getUser()?.points != null){
+            binding.textView15.text = formatCurrency(DataLocalManager.getUser()?.points!!)
+
+        }
+        else {
+            binding.textView15.text = "0 RP"
+        }
+
     }
     private fun settingUpListener() {
         binding.reward.setOnClickListener {
@@ -41,5 +53,10 @@ class RedeemFragment : Fragment() {
             startActivity(intent)
         }
 
+    }
+
+    fun formatCurrency(amount: Int): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted RP"
     }
 }

@@ -47,7 +47,7 @@ class DonationHistoryViewModel : ViewModel() {
         page: Int,
     ) {
         viewModelScope.launch {
-            repository.getTransactionByProjectId(projectId,page,5)
+            repository.getTransactionByProjectId(projectId,page,10)
                 .enqueue(object : Callback<ResponseWrapper<Page<TransactionResponse>>> {
                     override fun onResponse(
                         call: Call<ResponseWrapper<Page<TransactionResponse>>>,

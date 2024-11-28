@@ -269,6 +269,8 @@ class DonationActivity : BaseActivity() {
                                         object : DonationViewModel.TransactionCallback {
                                             override fun onSuccess(transaction: Transaction?) {
                                                 val intent = Intent(this@DonationActivity, SuccessActivity::class.java)
+                                                intent.putExtra("transaction" ,binding.amount.text.toString().replace(",", "").toDouble() )
+                                                intent.putExtra("transactionId", transactionId)
                                                 startActivity(intent)
                                                 finish()
                                             }
