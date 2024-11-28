@@ -77,6 +77,14 @@ class DonationActivity : BaseActivity() {
         }
         binding.name.text = project.name
 
+        if (DataLocalManager.getUser() != null) {
+            binding.anonymous.isEnabled = true
+            binding.anonymous.isChecked = false
+        } else {
+            binding.anonymous.isEnabled = false
+            binding.anonymous.isChecked = true
+        }
+
     }
 
     private fun settingUpListener() {
@@ -257,11 +265,17 @@ class DonationActivity : BaseActivity() {
 
                         ) {
 
-                            DataLocalManager.getUser()
-                                ?.let {
+                            val userId = if (!binding.anonymous.isChecked) {
+                                DataLocalManager.getUser()?.userId
+                            } else {
+                                30 // default user
+                            }
+
+
+
                                     viewModel.saveTransaction(
                                         transactionId,
-                                        it.userId,
+                                        userId!!,
                                         project.projectId,
                                         binding.amount.text.toString().replace(",", "").toDouble(),
                                         "Zalo Pay",
@@ -269,6 +283,8 @@ class DonationActivity : BaseActivity() {
                                         object : DonationViewModel.TransactionCallback {
                                             override fun onSuccess(transaction: Transaction?) {
                                                 val intent = Intent(this@DonationActivity, SuccessActivity::class.java)
+                                                intent.putExtra("transaction" ,binding.amount.text.toString().replace(",", "").toDouble() )
+                                                intent.putExtra("transactionId", transactionId)
                                                 startActivity(intent)
                                                 finish()
                                             }
@@ -279,7 +295,7 @@ class DonationActivity : BaseActivity() {
                                 }
 
 
-                        }
+
 
                         override fun onPaymentCanceled(zpTransToken: String, appTransID: String) {
                             MaterialAlertDialogBuilder(this@DonationActivity)

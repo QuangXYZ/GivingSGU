@@ -9,6 +9,7 @@
     app:layoutDescription="@xml/fragment_profile_scene"
     tools:context=".activity.Fragment.ProfileFragment">">
 
+
     <LinearLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
