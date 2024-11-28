@@ -67,6 +67,11 @@ class ProjectHighLightAdapter(val projects: MutableList<Project>) : RecyclerView
             intent.putExtra("project", projects[position])
             holder.itemView.context.startActivity(intent)
         }
+        holder.binding.donateButton.setOnClickListener {
+            val intent = Intent(holder.itemView.context, ProjectDetailActivity::class.java)
+            intent.putExtra("project", projects[position])
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
 
