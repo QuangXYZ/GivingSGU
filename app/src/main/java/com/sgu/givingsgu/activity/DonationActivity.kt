@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.quang.lilyshop.activity.BaseActivity
@@ -67,6 +68,14 @@ class DonationActivity : BaseActivity() {
         } else {
             intent.getParcelableExtra("project")!!
         }
+
+        if (project.imageUrls != null) {
+            val images = project.imageUrls?.split(",")?.toList()
+            images?.let {
+                Glide.with(this).load(it[0]).into(binding.image)
+            }
+        }
+        binding.name.text = project.name
 
     }
 

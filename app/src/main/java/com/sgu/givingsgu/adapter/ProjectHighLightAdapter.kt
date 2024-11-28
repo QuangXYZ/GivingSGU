@@ -33,14 +33,8 @@ class ProjectHighLightAdapter(val projects: MutableList<Project>) : RecyclerView
         holder.binding.title.text = projects[position].name
 
 
-        val cleanString = projects[position].currentAmount.toString().replace("""[,.]""".toRegex(), "")
 
-        // Chuyển chuỗi về dạng số
-        val parsed = cleanString.toDoubleOrNull() ?: 0.0
-
-        // Định dạng số theo kiểu tiền tệ
-        val formatted = NumberFormat.getNumberInstance(Locale.US).format(parsed)
-        holder.binding.donateAmount.text = formatted+ " VND"
+        holder.binding.donateAmount.text = formatCurrency(projects[position].currentAmount!!)
         val percent = (projects[position].currentAmount?.div(projects[position].targetAmount)
             ?.times(100))
             ?.toInt()
@@ -53,6 +47,17 @@ class ProjectHighLightAdapter(val projects: MutableList<Project>) : RecyclerView
             }
 
         }
+        val startDateTime = LocalDateTime.now()
+        val endDateTime = projects[position].endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+        val daysRemaining = ChronoUnit.DAYS.between(startDateTime, endDateTime)
+
+        holder.binding.donateRemain.text = if (daysRemaining < 0) {
+            "Đã kết thúc"
+        } else {
+            "$daysRemaining ngày"
+        }
+
+
 
         holder.binding.donateNumber.text = projects[position].numberDonors.toString()+" người đã ủng hộ"
         holder.binding.projectTime.text = formatTimeDifference(projects[position].startDate!!).toString()
@@ -91,6 +96,10 @@ class ProjectHighLightAdapter(val projects: MutableList<Project>) : RecyclerView
         }
     }
 
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
+    }
 }
 
 

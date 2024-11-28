@@ -72,24 +72,9 @@ class ProjectDetailActivity : BaseActivity() {
         binding.projectProgress.progress = percent!!
         binding.projectTime.text = calculateTimeRemaining(project.endDate)
 
-        var cleanString = project.targetAmount.toString().replace("""[,.]""".toRegex(), "")
+        binding.projectTarget.text = formatCurrency(project.targetAmount)
 
-        var parsed = cleanString.toDoubleOrNull() ?: 0.0
-
-        var formatted = NumberFormat.getNumberInstance(Locale.US).format(parsed)
-
-        binding.projectTarget.text = formatted + " VND"
-
-
-        cleanString = project.currentAmount.toString().replace("""[,.]""".toRegex(), "")
-
-        parsed = cleanString.toDoubleOrNull() ?: 0.0
-
-        formatted = NumberFormat.getNumberInstance(Locale.US).format(parsed)
-
-
-        binding.projectAmount.text = formatted + " VND"
-
+        binding.projectAmount.text = project.currentAmount?.let { formatCurrency(it) }
         val fullText = project.description
         binding.projectDescription.text = fullText
         // Kiểm tra nếu nội dung quá dài thì mặc định chỉ hiển thị 3 dòng
@@ -103,7 +88,6 @@ class ProjectDetailActivity : BaseActivity() {
         initComment()
         initTopDonor()
         initImage()
-
 
 
     }
@@ -133,6 +117,12 @@ class ProjectDetailActivity : BaseActivity() {
             intent.putExtra("project", project)
             startActivity(intent)
         }
+
+        binding.transactionHistory.setOnClickListener {
+            val intent = Intent(this, DonationHistoryActivity::class.java)
+            intent.putExtra("project", project)
+            startActivity(intent)
+        }
     }
 
     private fun initComment() {
@@ -158,7 +148,7 @@ class ProjectDetailActivity : BaseActivity() {
                     binding.firstUserImg.setImageResource(R.drawable.user_default)
                 }
                 binding.firstUserName.text = it[0].fullName
-                binding.firstUserAmount.text = it[0].totalAmount.toString() + " VND"
+                binding.firstUserAmount.text = formatCurrency(it[0].totalAmount)
             }
 
             if (it.size >= 2) {
@@ -171,7 +161,7 @@ class ProjectDetailActivity : BaseActivity() {
                     binding.secondUserImg.setImageResource(R.drawable.user_default)
                 }
                 binding.secondUserName.text = it[1].fullName
-                binding.secondUserAmount.text = it[1].totalAmount.toString() + " VND"
+                binding.secondUserAmount.text = formatCurrency(it[1].totalAmount)
             }
 
             if (it.size >= 3) {
@@ -184,9 +174,9 @@ class ProjectDetailActivity : BaseActivity() {
                     binding.thirdUserImg.setImageResource(R.drawable.user_default)
                 }
                 binding.thirdUserName.text = it[2].fullName
-                binding.thirdUserAmount.text = it[2].totalAmount.toString() + " VND"
+                binding.thirdUserAmount.text = formatCurrency(it[2].totalAmount)
 
-                }
+            }
 
 
             donorAdapter = DonorAdapter(it.drop(3).toMutableList())
@@ -198,13 +188,18 @@ class ProjectDetailActivity : BaseActivity() {
     }
 
     private fun initImage() {
-        images = project.imageUrls?.split(",") ?: listOf("https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg","https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg","https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg")
+        images = project.imageUrls?.split(",") ?: listOf(
+            "https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg",
+            "https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg",
+            "https://www.bluemoongame.com/wp-content/uploads/2021/08/002-Unwanted-Experiment.jpg"
+        )
 
         imageAdapter = ImageAdapter(images)
 
         binding.imageRecyclerView.adapter = imageAdapter
         binding.imageRecyclerView.isNestedScrollingEnabled = true
-        binding.imageRecyclerView.layoutManager =   LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.imageRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     fun calculateTimeRemaining(endDate: Date): String {
@@ -227,6 +222,13 @@ class ProjectDetailActivity : BaseActivity() {
         }
     }
 
+
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
+    }
+
 }
+
 
 

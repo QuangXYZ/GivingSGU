@@ -2,6 +2,7 @@ package com.sgu.givingsgu.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -37,14 +38,8 @@ class ProjectAdapter(val projects: MutableList<ProjectResponse>) : RecyclerView.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.title.text = projects[position].project.name
 
-        val cleanString = projects[position].project.currentAmount.toString().replace("""[,.]""".toRegex(), "")
 
-        // Chuyển chuỗi về dạng số
-        val parsed = cleanString.toDoubleOrNull() ?: 0.0
-
-        // Định dạng số theo kiểu tiền tệ
-        val formatted = NumberFormat.getNumberInstance(Locale.US).format(parsed)
-        holder.binding.donateAmount.text = formatted+ " VND"
+        holder.binding.donateAmount.text = formatCurrency(projects[position].project.currentAmount!!)
         val percent = (projects[position].project.currentAmount?.div(projects[position].project.targetAmount)
             ?.times(100))
             ?.toInt()
@@ -59,6 +54,16 @@ class ProjectAdapter(val projects: MutableList<ProjectResponse>) : RecyclerView.
 
         }
 
+        val startDateTime = LocalDateTime.now()
+        val endDateTime = projects[position].project.endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+        val daysRemaining = ChronoUnit.DAYS.between(startDateTime, endDateTime)
+
+        holder.binding.donateRemain.text = if (daysRemaining < 0) {
+            "Đã kết thúc"
+        } else {
+            "$daysRemaining ngày"
+        }
+
         holder.binding.donateNumber.text = projects[position].project.numberDonors.toString()+" người đã ủng hộ"
         holder.binding.projectTime.text = formatTimeDifference(projects[position].project.startDate!!)
         if (projects[position].liked) {
@@ -70,14 +75,15 @@ class ProjectAdapter(val projects: MutableList<ProjectResponse>) : RecyclerView.
         holder.binding.homeLikeBtn.setOnClickListener {
             if (!DataLocalManager.isLoggedIn()) return@setOnClickListener
             if(holder.binding.homeLikeBtn.isChecked) {
-                projectRepository.unlikeProject(projects[position].project.projectId)
-                holder.binding.likeCount.text = (projects[position].likeCount - 1).toString()
 
-
-            }
-            else {
                 projectRepository.likeProject(projects[position].project.projectId)
                 holder.binding.likeCount.text = (projects[position].likeCount + 1).toString()
+            }
+            else {
+
+
+                projectRepository.unlikeProject(projects[position].project.projectId)
+                holder.binding.likeCount.text = (projects[position].likeCount - 1).toString()
 
             }
 
@@ -117,6 +123,11 @@ class ProjectAdapter(val projects: MutableList<ProjectResponse>) : RecyclerView.
             hours > 0 -> "$hours giờ trước"
             else -> "Vừa mới"
         }
+    }
+
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
     }
 
 }

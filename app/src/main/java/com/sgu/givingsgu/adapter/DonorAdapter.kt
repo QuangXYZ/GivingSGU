@@ -30,13 +30,8 @@ class DonorAdapter (val donations: MutableList<DonationResponse>) :
         holder.binding.donorDate.text = donations[position].totalAmount.toString()
 
 
-        val cleanString = donations[position].totalAmount.toString().replace("""[,.]""".toRegex(), "")
 
-        // Chuyển chuỗi về dạng số
-        val parsed = cleanString.toDoubleOrNull() ?: 0.0
-
-        val formatted = NumberFormat.getNumberInstance(Locale.US).format(parsed)
-        holder.binding.donationAmount.text = formatted+ " VND"
+        holder.binding.donationAmount.text = formatCurrency(donations[position].totalAmount)
 
         if (position%2==0) {
             holder.binding.materialCardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.orange_100))
@@ -62,6 +57,11 @@ class DonorAdapter (val donations: MutableList<DonationResponse>) :
     class ViewHolder(val binding: SingleDonorLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+    }
+
+    fun formatCurrency(amount: Double): String {
+        val formatted = NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return "$formatted VND"
     }
 
 
