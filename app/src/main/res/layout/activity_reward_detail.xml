@@ -86,14 +86,17 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:cardElevation="2dp"
-        app:cardCornerRadius="12dp"
-        app:strokeColor="@color/white"
         android:backgroundTint="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:strokeColor="@color/white"
+        tools:layout_editor_absoluteX="16dp">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,17 +111,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-
             <TextView
                 android:id="@+id/rewardName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:textStyle="bold"
-                android:textSize="16sp"
                 android:text="Reward Name"
                 android:textColor="@color/text_color"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/rewardimg"
                 app:layout_constraintTop_toTopOf="@+id/rewardimg" />
 
@@ -136,10 +138,10 @@
                 app:layout_constraintStart_toEndOf="@+id/rewardimg" />
 
             <TextView
-                android:layout_marginTop="12dp"
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:text="Id reward"
                 android:textColor="@color/text_color"
                 android:textSize="16sp"
@@ -185,10 +187,10 @@
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="Status"
                 android:textColor="@color/text_color"
                 android:textSize="16sp"
-                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -197,13 +199,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pending"
-                android:textColor="@color/text_color"
+                android:textColor="@color/green_connectify"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/textView15"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView15" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -215,12 +216,14 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="2dp"
-        app:cardCornerRadius="20dp"
-        app:strokeColor="@color/white"
         android:backgroundTint="@color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView6"
+        app:strokeColor="@color/white">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -228,9 +231,10 @@
 
             <ImageView
                 android:id="@+id/qrcode"
-                android:layout_width="400dp"
-                android:layout_height="400dp"
+                android:layout_width="280dp"
+                android:layout_height="280dp"
                 android:src="@drawable/user_default"
+                app:layout_constraintBottom_toTopOf="@+id/textView18"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -242,9 +246,9 @@
                 android:text="Show the QR code at the redemption counter"
                 android:textColor="@color/text_color"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

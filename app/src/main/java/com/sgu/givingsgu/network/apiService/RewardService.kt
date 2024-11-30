@@ -25,4 +25,7 @@ interface RewardService {
     @GET("api/reward/history/{userId}")
     fun getAllUserReward(@Path("userId") userId: Long): Call<ResponseWrapper<List<UserReward>>>
 
+    @POST("api/reward/confirm/{userRewardId}")
+    fun confirmReward(@Path("userRewardId") userRewardId: String): Call<ResponseWrapper<String>>
+
 }

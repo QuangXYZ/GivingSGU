@@ -25,4 +25,7 @@ class RewardRepository {
     fun getAllRewardHistory(userId: Long): Call<ResponseWrapper<List<UserReward>>> {
         return rewardApiService.getAllUserReward(userId)
     }
+    fun confirmReward(userRewardId: String): Call<ResponseWrapper<String>> {
+        return rewardApiService.confirmReward(userRewardId)
+    }
 }

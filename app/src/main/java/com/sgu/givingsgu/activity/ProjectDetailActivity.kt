@@ -139,7 +139,7 @@ class ProjectDetailActivity : BaseActivity() {
         viewModel.donation.observe(this, Observer {
 
             if (it.size >= 1) {
-                if (it[0].imageUrl != null) {
+                if (it[0].imageUrl != null && it[0].imageUrl != "") {
                     Glide.with(this)
                         .load(it[0].imageUrl)
                         .centerInside()
@@ -152,7 +152,7 @@ class ProjectDetailActivity : BaseActivity() {
             }
 
             if (it.size >= 2) {
-                if (it[1].imageUrl != null) {
+                if (it[1].imageUrl != null && it[1].imageUrl != "") {
                     Glide.with(this)
                         .load(it[1].imageUrl)
                         .centerInside()
@@ -165,7 +165,7 @@ class ProjectDetailActivity : BaseActivity() {
             }
 
             if (it.size >= 3) {
-                if (it[2].imageUrl != null) {
+                if (it[2].imageUrl != null && it[2].imageUrl != "") {
                     Glide.with(this)
                         .load(it[2].imageUrl)
                         .centerInside()

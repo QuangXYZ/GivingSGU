@@ -25,11 +25,11 @@ interface ProjectService {
     suspend fun createProject(@Body project: ProjectDTO): Response<ProjectDTO>
 
 
-    @GET("api/projects/{projectId}")
+    @GET("api/project-likes/{projectId}")
     fun likeProject(@Path("projectId") projectId: Long,@Query("userId") userId: Long,): Call<ResponseWrapper<List<String>>>
 
 
-    @DELETE("api/projects/{projectId}")
+    @DELETE("api/project-likes/{projectId}")
     fun unlikeProject(@Path("projectId") projectId: Long,@Query("userId") userId: Long,): Call<ResponseWrapper<List<String>>>
 
   
