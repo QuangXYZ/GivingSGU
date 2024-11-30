@@ -71,24 +71,27 @@ class AdminProjectAdapter(val projects: MutableList<ProjectResponse>) :
             formatTimeDifference(projects[position].project.startDate!!).toString()
 
         if (projects[position].liked) {
-            holder.binding.adminHomeLikeBtn.isChecked = true
+            holder.binding.homeLikeBtn.isChecked = true
         }
 
         holder.binding.likeCount.text = projects[position].likeCount.toString()
 
-        holder.binding.adminHomeLikeBtn.setOnClickListener {
+        holder.binding.homeLikeBtn.setOnClickListener {
             if (!DataLocalManager.isLoggedIn()) return@setOnClickListener
-            if(holder.binding.adminHomeLikeBtn.isChecked) {
+            if(holder.binding.homeLikeBtn.isChecked) {
+
+                projectRepository.likeProject(projects[position].project.projectId)
+                holder.binding.likeCount.text = (projects[position].likeCount + 1).toString()
+            }
+            else {
+
+
                 projectRepository.unlikeProject(projects[position].project.projectId)
                 holder.binding.likeCount.text = (projects[position].likeCount - 1).toString()
 
-
             }
-            else {
-                projectRepository.likeProject(projects[position].project.projectId)
-                holder.binding.likeCount.text = (projects[position].likeCount + 1).toString()
 
-            }
+
         }
 
         holder.itemView.setOnClickListener {

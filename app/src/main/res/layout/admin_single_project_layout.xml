@@ -310,7 +310,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
             <com.google.android.material.checkbox.MaterialCheckBox
-                android:id="@+id/admin_homeLikeBtn"
+                android:id="@+id/homeLikeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:button="@null"
@@ -331,9 +331,9 @@
                 android:padding="8dp"
                 android:textColor="@color/text_color"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/admin_homeLikeBtn"
-                app:layout_constraintStart_toEndOf="@+id/admin_homeLikeBtn"
-                app:layout_constraintTop_toTopOf="@+id/admin_homeLikeBtn" />
+                app:layout_constraintBottom_toBottomOf="@+id/homeLikeBtn"
+                app:layout_constraintStart_toEndOf="@+id/homeLikeBtn"
+                app:layout_constraintTop_toTopOf="@+id/homeLikeBtn" />
 
             <ImageView
                 android:id="@+id/admin_imageView"

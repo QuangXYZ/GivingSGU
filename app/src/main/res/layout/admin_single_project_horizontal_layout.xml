@@ -280,7 +280,7 @@
                     android:layout_marginTop="8dp"
                     android:paddingEnd="16dp"
                     android:paddingBottom="4dp"
-                    android:text="Ủng hộ"
+                    android:text="Chi tiết"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="12sp"
