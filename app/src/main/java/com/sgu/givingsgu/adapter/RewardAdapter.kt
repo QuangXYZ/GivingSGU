@@ -27,8 +27,8 @@ class RewardAdapter (val rewards: MutableList<Reward>, val listener: OnRewardCli
             Glide.with(context).load(rewards[position].imageUrl).into(holder.binding.imageView10)
         }
         holder.binding.tvRewardName.text = rewards[position].name
-        holder.binding.tvRewardPoint.text = rewards[position].pointsRequired.toString()
-        holder.binding.tvRewardQuantity.text = rewards[position].quantity.toString()
+        holder.binding.tvRewardPoint.text = rewards[position].pointsRequired.toString()+"RP"
+        holder.binding.tvRewardQuantity.text = "Còn lại "+rewards[position].quantity.toString()
 
         if (position == selectedPosition) {
             holder.binding.root.strokeColor = context.getColor(R.color.yellow) // Màu khi được chọn
