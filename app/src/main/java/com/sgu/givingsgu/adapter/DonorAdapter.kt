@@ -12,6 +12,8 @@ import com.sgu.givingsgu.databinding.SingleDonorLayoutBinding
 import com.sgu.givingsgu.network.response.CommentResponse
 import com.sgu.givingsgu.network.response.DonationResponse
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class DonorAdapter (val donations: MutableList<DonationResponse>) :
@@ -27,7 +29,7 @@ class DonorAdapter (val donations: MutableList<DonationResponse>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.donorName.text = donations[position].fullName
-        holder.binding.donorDate.text = donations[position].totalAmount.toString()
+        holder.binding.donorDate.text = formatDate(donations[position].donateDate)
 
 
 
@@ -40,7 +42,7 @@ class DonorAdapter (val donations: MutableList<DonationResponse>) :
             holder.binding.materialCardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.teal_100))
         }
 
-        if (donations[position].imageUrl!=null) {
+        if (donations[position].imageUrl!=null && donations[position].imageUrl.isNotEmpty()) {
             Glide.with(context)
                 .load(donations[position].imageUrl)
                 .centerInside()
@@ -64,6 +66,11 @@ class DonorAdapter (val donations: MutableList<DonationResponse>) :
         return "$formatted VND"
     }
 
+
+    fun formatDate(date: Date): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return dateFormat.format(date)
+    }
 
 }
 

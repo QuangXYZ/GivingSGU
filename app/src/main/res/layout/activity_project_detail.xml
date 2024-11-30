@@ -284,6 +284,9 @@
                                     android:id="@+id/secondUserImg"
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
+                                    app:civ_circle_background_color="@color/lightGrey"
+                                    app:civ_border_color="@color/white"
+                                    app:civ_border_width="2dp"
                                     android:src="@drawable/user_default"/>
                                 <TextView
                                     android:id="@+id/secondUserName"
@@ -319,6 +322,9 @@
                                 <de.hdodenhof.circleimageview.CircleImageView
                                     android:id="@+id/firstUserImg"
                                     android:layout_width="52dp"
+                                    app:civ_circle_background_color="@color/lightGrey"
+                                    app:civ_border_color="@color/white"
+                                    app:civ_border_width="2dp"
                                     android:layout_height="52dp"
                                     android:src="@drawable/user_default"/>
                                 <TextView
@@ -357,6 +363,9 @@
                                     android:id="@+id/thirdUserImg"
                                     android:layout_width="52dp"
                                     android:layout_height="52dp"
+                                    app:civ_circle_background_color="@color/lightGrey"
+                                    app:civ_border_color="@color/white"
+                                    app:civ_border_width="2dp"
                                     android:src="@drawable/user_default"/>
                                 <TextView
                                     android:id="@+id/thirdUserName"
