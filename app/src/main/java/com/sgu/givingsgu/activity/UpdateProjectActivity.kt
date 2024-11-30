@@ -27,6 +27,7 @@ import com.sgu.givingsgu.databinding.ActivityUpdateProjectBinding
 import com.sgu.givingsgu.model.Project
 import com.sgu.givingsgu.model.ProjectDTO
 import com.sgu.givingsgu.viewmodel.UpdateProjectViewModel
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -88,7 +89,7 @@ class UpdateProjectActivity : BaseActivity() {
         binding.projectDescription.setText(project.description)
         binding.projectStartDate.setText(formatDate(project.startDate))
         binding.projectEndDate.setText(formatDate(project.endDate))
-        binding.projectTargetAmount.setText(project.targetAmount.toString())
+        binding.projectTargetAmount.setText(formatCurrency(project.targetAmount).toString())
         binding.projectStatus.setSelection(getStatusIndex(project.status))
         // Hiển thị ảnh đã chọn nếu có
         // Giả sử có ImagePreviewAdapter để hiển thị danh sách ảnh
@@ -260,5 +261,10 @@ class UpdateProjectActivity : BaseActivity() {
                 PERMISSION_REQUEST_CODE
             )
         }
+    }
+
+    fun formatCurrency(amount: Double): String {
+        val formatted = amount.toLong().toString()
+        return "$formatted"
     }
 }
